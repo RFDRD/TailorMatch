@@ -1,0 +1,249 @@
+TEXNIK TOPSHIRIQ
+CHOYXONA.UZ
+O'zbekiston choyxonalarida stol bron qilish
+mobil ilovasi
+
+
+Versiya: 1.0
+Sana: 25.11.2025
+Muallif: Rustamjon Abduvahobov
+
+MUNDARIJA
+1. Loyihaning vazifalari va maqsadlarini belgilash
+2. Loyiha maqsadi
+3. Analitik vazifalar
+4. Rivojlanish vazifalari
+5. Tashkiliy vazifalar
+6. Sinov va sifat nazorati
+7. Funksional talablar
+8. Texnik talablar
+9. Dizayn va interfeys
+10. Xavfsizlik
+11. Muddatlar va bosqichlar
+
+1. LOYIHANING VAZIFALARI VA MAQSADLARINI BELGILASH
+Choyxona.uz — bu O'zbekistondagi choyxonalarda stol bron qilish uchun mo'ljallangan zamonaviy mobil ilova. Loyiha milliy oshxona madaniyatini raqamlashtirish va mijozlarga qulay xizmat ko'rsatish maqsadida ishlab chiqilmoqda.
+1.1 Asosiy vazifalar
+Foydalanuvchilarga choyxonalarni qidirish va ko'rish imkoniyatini berish
+Onlayn stol bron qilish tizimini joriy etish
+Choyxona egalari uchun boshqaruv panelini yaratish
+Mijoz va choyxona o'rtasida samarali aloqani ta'minlash
+Geolocatsiya orqali yaqin atrofdagi choyxonalarni topish
+Reyting va sharhlar tizimini joriy etish
+1.2 Maqsadli auditoriya
+Oddiy foydalanuvchilar (mijozlar) — choyxonada dam olishni xohlovchilar
+Choyxona egalari — o'z biznesini boshqarmoqchi bo'lganlar
+Choyxona administratorlari — kundalik operatsiyalarni boshqaruvchilar
+Super Admin — platformani umumiy boshqaruvchi
+
+2. LOYIHA MAQSADI
+Loyihaning asosiy maqsadi — O'zbekiston bo'ylab choyxonalarda stol bron qilish jarayonini soddalashtirish va raqamlashtirish. Ilova orqali foydalanuvchilar bir necha bosqichda stol bron qilishlari, choyxona haqida ma'lumot olishlari va xizmat sifatini baholashlari mumkin.
+2.1 Strategik maqsadlar
+6 oy ichida 100+ choyxonani platformaga qo'shish
+10,000+ aktiv foydalanuvchiga erishish
+95%+ foydalanuvchi qoniqishini ta'minlash
+Bron qilish jarayonini 90% qisqartirish (telefon qo'ng'iroqlarga nisbatan)
+Choyxona daromadini 20-30% oshirish
+2.2 Texnik maqsadlar
+Yuqori ishlash tezligi (3 soniyadan kam yuklanish vaqti)
+99.9% uptime (ishonchlilik)
+Android va iOS platformalarini qo'llab-quvvatlash
+Web versiyani yaratish
+Real-time ma'lumot sinxronizatsiyasi
+
+3. ANALITIK VAZIFALAR
+Loyihani muvaffaqiyatli amalga oshirish uchun chuqur tahlil va tadqiqot o'tkazish zarur. Quyidagi analitik vazifalar belgilangan:
+3.1 Bozor tahlili
+O'zbekistondagi choyxonalar sonini aniqlash (shahar va viloyatlar bo'yicha)
+Raqobatchilarni tahlil qilish (Booking.com, Yandex.Eda va boshqalar)
+Maqsadli auditoriyaning xatti-harakatlarini o'rganish
+Bozordagi tendentsiyalar va rivojlanish yo'nalishlarini aniqlash
+3.2 Texnik tahlil
+Flutter framework imkoniyatlarini baholash
+Firebase xizmatlari va cheklovlarini o'rganish
+Geolokatsiya API larni taqqoslash
+To'lov tizimlarini integratsiya imkoniyatlari (Payme, Click)
+3.3 Foydalanuvchi tajribasi tahlili
+User Journey mapping — foydalanuvchi yo'lini xaritalash
+UX/UI eng yaxshi amaliyotlarini o'rganish
+A/B testlash strategiyasini ishlab chiqish
+Foydalanuvchi fikr-mulohazalarini yig'ish tizimi
+
+4. RIVOJLANISH VAZIFALARI
+Loyihani rivojlantirish uchun quyidagi texnik vazifalar belgilangan:
+4.1 Mobil ilova (Flutter)
+Foydalanuvchi autentifikatsiyasi (telefon raqam, Google, Apple)
+Asosiy ekran — kategoriyalar va choyxonalar ro'yxati
+Choyxona tafsilotlari ekrani (rasm galereyasi, menu, sharh)
+Geolokatsiya — yaqin choyxonalarni xaritada ko'rsatish
+Bron qilish oqimi — sana, vaqt, mehmonlar soni tanlash
+Sevimlilar ro'yxati
+Foydalanuvchi profili va sozlamalar
+Push bildirishnomalar
+4.2 Admin Panel (Choyxona boshqaruvi)
+Bronlarni boshqarish (tasdiqlash, rad etish, o'zgartirish)
+Menu boshqaruvi (taomlar, narxlar, kategoriyalar)
+Stollar boshqaruvi (joy, sig'im, holat)
+Ish vaqtini sozlash
+Statistika va hisobotlar
+Sharhlarni ko'rish va javob berish
+Aksiyalar va chegirmalar yaratish
+4.3 Super Admin Panel
+Platformadagi barcha choyxonalarni boshqarish
+Foydalanuvchilar va rollarni boshqarish
+Umumiy statistika va analitika
+Premium obunalarni boshqarish
+Tizim sozlamalari
+4.4 Backend (Firebase)
+Firebase Authentication — foydalanuvchi autentifikatsiyasi
+Cloud Firestore — ma'lumotlar bazasi
+Firebase Storage — rasm va fayllar saqlash
+Cloud Functions — server tomonidagi mantiq
+Firebase Messaging — push bildirishnomalar
+
+5. TASHKILIY VAZIFALAR
+Loyihani muvaffaqiyatli boshqarish uchun quyidagi tashkiliy vazifalar belgilangan:
+5.1 Jamoa tarkibi
+Loyiha menejeri — 1 kishi
+Flutter dasturchilari — 2 kishi
+UI/UX dizayner — 1 kishi
+Backend dasturchisi — 1 kishi
+QA muhandisi — 1 kishi
+5.2 Aloqa va hisobot
+Kundalik stand-up yig'ilishlar (15 daqiqa)
+Haftalik sprint review
+Oylik progress hisoboti
+Telegram guruhida operativ aloqa
+Jira/Trello orqali vazifalarni kuzatish
+5.3 Hujjatlashtirish
+API hujjatlari (Swagger/OpenAPI)
+Kod hujjatlari (DartDoc)
+Foydalanuvchi qo'llanmasi
+Administrator qo'llanmasi
+Release notes (yangiliklar ro'yxati)
+
+6. SINOV VA SIFAT NAZORATI
+Mahsulot sifatini ta'minlash uchun keng qamrovli sinov strategiyasi ishlab chiqilgan:
+6.1 Sinov turlari
+Unit testlar — har bir komponent alohida sinovdan o'tkaziladi
+Widget testlar — UI elementlarini sinash
+Integration testlar — komponentlar integratsiyasini sinash
+End-to-end testlar — to'liq foydalanuvchi oqimini sinash
+Performance testlar — tezlik va yuklanish sinovlari
+Security testlar — xavfsizlik sinovlari
+6.2 Qabul qilish mezonlari
+Barcha unit testlar muvaffaqiyatli o'tishi kerak (100%)
+Kod qamrovi (code coverage) — kamida 80%
+Kritik xatolarning yo'qligi
+UI/UX dizayn standartlariga muvofiqligi
+Ishlash tezligi mezonlariga javob berishi
+6.3 Beta-test
+50-100 beta-tester tanlash
+2 hafta beta-test davri
+Fikr-mulohazalarni yig'ish va tahlil qilish
+Aniqlangan xatolarni tuzatish
+Oxirgi sinovlar va reliz tayyorlash
+
+7. FUNKSIONAL TALABLAR
+7.1 Mijoz ilovasi
+Ro'yxatdan o'tish va kirish (telefon raqam, Google, Apple ID)
+Choyxonalarni qidirish (nom, joylashuv, kategoriya bo'yicha)
+Choyxona tafsilotlarini ko'rish (foto, menu, tahrir, sharh)
+Geolokatsiya orqali yaqin choyxonalarni topish
+Xaritada ko'rish (Google Maps integratsiyasi)
+Stol bron qilish (sana, vaqt, mehmonlar soni)
+Bron tarixini ko'rish
+Sevimli choyxonalar ro'yxati
+Sharh va baho qoldirish (Yandex uslubida ko'p aspektli)
+Push bildirishnomalar (bron holati, maxsus takliflar)
+Profil sozlamalari (til, tema, bildirishnomalar)
+Chiqish (logout) tasdiqlash dialogi
+7.2 Admin paneli
+Kirish va autentifikatsiya
+Dashboard — umumiy statistika
+Bronlarni boshqarish (tasdiqlash, rad etish, o'zgartirish)
+Menu boshqaruvi (qo'shish, tahrirlash, o'chirish)
+Stollar boshqaruvi
+Ish vaqtini sozlash (hafta kunlari bo'yicha)
+Sharhlarni ko'rish va javob berish
+Aksiyalar yaratish
+Hisobotlar va analitika
+QR menu generatori
+7.3 Super Admin paneli
+Barcha choyxonalarni boshqarish
+Yangi choyxona qo'shish
+Foydalanuvchilarni boshqarish
+Adminlarni tayinlash
+Premium obunalar
+Umumiy statistika
+Tizim sozlamalari
+
+8. TEXNIK TALABLAR
+8.1 Texnologiya steki
+
+8.2 Tizim talablari
+Android: API 21+ (Android 5.0 Lollipop yoki undan yuqori)
+iOS: iOS 12.0 yoki undan yuqori
+Internet ulanishi talab qilinadi
+GPS/Joylashuv xizmatlari
+Xotira: kamida 100 MB bo'sh joy
+8.3 API va integratsiyalar
+RESTful API arxitekturasi
+Google Maps API — xarita va geolokatsiya
+Firebase REST API — ma'lumotlarni sinxronizatsiya
+Payme/Click API — to'lov tizimi (keyingi bosqich)
+SMS Gateway — telefon tasdiqlash uchun
+
+9. DIZAYN VA INTERFEYS
+9.1 Dizayn tamoyillari
+Zamonaviy va minimalist dizayn
+Material Design 3 standartlari
+Adaptiv dizayn (mobil, planshet, veb)
+Dark/Light tema qo'llab-quvvatlash
+Glassmorphism va yumshoq animatsiyalar
+Intuitiv navigatsiya
+9.2 Ranglar sxemasi
+Asosiy ranglar:
+Asosiy (Primary): #10B981 (Yashil)
+Ikkinchi darajali: #059669 (To'q yashil)
+Aksent: #F59E0B (Oltin/sariq)
+Xato: #EF4444 (Qizil)
+Muvaffaqiyat: #10B981 (Yashil)
+Fon (Light): #F5F7FA
+Fon (Dark): #0A0E21
+9.3 Shrift va tipografiya
+Asosiy shrift: Google Fonts (Inter, Roboto)
+Sarlavha: 24-28pt, Bold
+Sarlavha 2: 18-20pt, SemiBold
+Asosiy matn: 14-16pt, Regular
+Kichik matn: 12pt, Regular
+
+10. XAVFSIZLIK
+10.1 Ma'lumotlar xavfsizligi
+SSL/TLS shifrlash (HTTPS)
+Firebase Security Rules — ma'lumotlarga kirish nazorati
+Parollarni hash qilish
+Foydalanuvchi ma'lumotlarini shifrlash
+GDPR/Shaxsiy ma'lumotlar himoyasi
+10.2 Autentifikatsiya xavfsizligi
+Ko'p bosqichli autentifikatsiya (telefon tasdiqlash)
+JWT tokenlar orqali sessiya boshqaruvi
+Token yangilash mexanizmi
+Avtomatik logout (uzoq harakatsizlikdan so'ng)
+10.3 Hujumlardan himoya
+SQL Injection himoyasi (Firestore xavfsiz)
+XSS (Cross-Site Scripting) himoyasi
+CSRF (Cross-Site Request Forgery) himoyasi
+Rate limiting — so'rovlar cheklash
+DDoS himoyasi (Firebase/GCP)
+
+11. MUDDATLAR VA BOSQICHLAR
+
+Umumiy loyiha muddati: 15 hafta (taxminan 4 oy)
+
+XULOSA
+Choyxona.uz loyihasi O'zbekiston bozoriga yo'naltirilgan innovatsion mahsulot bo'lib, milliy oshxona madaniyatini raqamlashtirish va choyxonalarga yangi mijozlar oqimini ta'minlash maqsadini ko'zlaydi.
+Ushbu texnik topshiriq loyihaning barcha jihatlarini qamrab olgan bo'lib, jamoa a'zolari uchun aniq yo'l-yo'riq vazifasini bajaradi. Loyiha muvaffaqiyatli amalga oshirilgandan so'ng, O'zbekiston bo'ylab minglab foydalanuvchilarga xizmat ko'rsatishga tayyor bo'ladi.
+
+Tayyorladi: Rustamjon Abduvahobov
+Sana: 25.11.2025

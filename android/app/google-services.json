@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "166387390805",
+    "project_id": "seamstress-e737e",
+    "storage_bucket": "seamstress-e737e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166387390805:android:3a68f706fcc7c76a2a77dc",
+        "android_client_info": {
+          "package_name": "com.example.seamstress"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZh6fmZDvG1VT4bu7-b1Pao7-USDZWKPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

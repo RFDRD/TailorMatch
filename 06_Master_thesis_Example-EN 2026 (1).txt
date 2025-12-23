@@ -1,0 +1,930 @@
+
+Studiju programma		47483 Datorsistēmās
+
+
+
+Dabaszinātņu un datortehnoloģiju katedra
+
+
+Christian
+
+“Mobilo Tehnoloģiju Un to Pielietojumu Analīze Lauku Apvidos”
+
+
+MAĢISTRA DARBS
+
+
+
+
+
+
+RĪGA 2026
+
+Study program		47483 Computer System
+
+
+
+Natural Sciences and Computer Technologies Department
+
+Christian
+
+“Analysis of Mobile Technologies and Their Usages in Rural Area”
+
+
+MASTER THESIS
+
+
+
+
+
+
+RIGA 2026
+
+
+
+Abstract
+	Wireless network is used for communication and data transmission quite a long time already. The ease of access into the digital world become reality, million people all over the world are using various wireless devices. This is true, because wireless network has been around long enough and can provide foreseen benefits. 
+	At the enterprise level, we can mention the possibility be part of the network outside the building (place) itself. The wired world is becoming less useful, because of its physical limitation in terms of adaptability to a variation in demand. 
+	Of course, such convenience situation leads to a serious security question. Every year fraud, DoS, identity theft etc. statistical data growing constantly. The main that the wireless network, whether it’s ad-hoc or enterprise level, is vulnerable due to its features of open medium, and as usual weak authentication, authorization, encryption, monitoring, accounting  mechanisms.  
+	Various devices and detection mechanisms should be in place in order to protect wireless communication. Traditional firewall, encryption methods used for wired communication are no longer sufficient and effective. 
+	In this topic, we examine various wireless vulnerability situations, and say what should be at minimum in place, in order to protect, monitor, account, authenticate, and authorize nodes, users, pc into the network. Also, this topic touches aspects of several IEEE Security Standards, which were ratified and which are still in draft. 
+	
+
+
+
+
+
+
+
+
+
+
+Anotācija 
+Bezvadu tīkla izmanto sakaru un datu pārraides jau diezgan ilgu laiku. Viegla pieejamība uz digitālo pasauli kļūst par realitāti, miljoni cilvēku visā pasaulē izmanto dažādas bezvadu ierīces. Tas ir taisnība, jo bezvadu tīkls ir apmēram pietiekami ilgi, un var sniegt paredzētos priekšrocības.
+Uzņēmuma līmenī, mēs varam minēt iespēju būt daļa no tīkla ārpus ēkas (vieta). Vadu pasaule kļūst mazāk noderīga, jo tās fiziskās ierobežošanas ziņā pielāgoties novirzes pieprasījuma.
+	Protams, šāda ērtība situācija rada nopietnu drošības jautājumu. Katru gadu krāpšanu, DoS, identitātes zādzība utt. statistikas dati pieaug nepārtraukti. Galvenais, ka bezvadu tīkla, vai tas ad-hoc vai uzņēmuma līmenī, ir neaizsargāti, jo tās pazīmes atklātā vidē, un kā parasti vājas autentifikācijas, autorizācijas, šifrēšana, uzraudzības, grāmatvedības mehānismi.
+	Dažādas ierīces un atklāšanas mehānismi būtu jāievieš, lai aizsargātu bezvadu sakarus. Tradicionālā ugunsmūri, šifrēšanas metodes, ko izmanto vadu komunikāciju vairs nepietiek un nav efektīvi.
+	Šajā darbā, mēs pārbaudītu dažādas bezvadu ievainojamības situācijas, un pateiktu, ko vajadzētu būt vismaz vietā, lai aizsargātu, uzraudzītu, novērtētu, autentificētu, un atļaut mezglus, lietotājus, PC uz tīklu. Arī šī darba skar aspektus vairāku IEEE drošības standartiem, kas bija ratificējušas un kas ir tikai projekta.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Keywords
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Table of Content
+Abstract	3
+Anotācija	4
+Keywords	5
+Table of Content	6
+Research Direction	8
+Abbreviation	8
+Preamble	13
+Term of Reference	14
+Defended Thesis	14
+1.	Wireless Security	15
+1.1.	Introduction	15
+1.2.	802.11 Wi-Fi Amendments	16
+1.3.	Security Standards and International Organizations	21
+1.4.	Basic Security Concepts	23
+1.5.	History of Wireless Security	24
+1.6.	Summary	26
+2. Legacy Systems Security Approach	27
+2.1.	Authentication Processes	28
+2.2.	Encryption Ciphers and Proceedings	32
+2.3.	Wired Equivalent Privacy	35
+2.4.	Temporal Key Integrity Protocol	36
+2.5.	CCMP	38
+2.6.	Summary	42
+3.	Security Infrastructure	43
+3.1.	Architecture Capacities Examination	43
+3.2.	Equipment Administration	46
+3.3.	Public Key Infrastructure	51
+3.4.	Enterprise Encryption Gateway	53
+3.5.	Summary	53
+4. RSNA Adjusted Hybrid Authentication Schema	55
+5.	Conclusions	62
+6.	References	63
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Research Direction
+Topicality – modern information security practice is playing a key role in ensuring data confidentiality, integrity and availability. Nowadays the main aspect of digital world is security, preferably within wireless and wired area.
+Core – The main problem is this field to my mind is that legacy security mechanisms are not enough for modern challenges.
+Aim – In the frame of this topic to find out and offer the wireless robust security network mechanisms, by interrogating the following:
+Authentication, authorization and accounting (AAA) mechanisms for wireless communication;
+Confidentiality, integrity and authentication schemas;
+Wireless security standards;
+Various IEEE 802.11 amendments;
+Understanding wireless attacks;
+Conclusion and future trends.
+Hypothesis – There is none such meaning as ‘absolute security’, therefore, author attempted to develop relative AAA schema which is maximally close to best practices. 
+
+Abbreviation
+ISM – Industrial, Scientific and Medical Radio Band
+GPS – Global Position Systems
+IEEE – Institute of Electrical and Electronic Engineers
+ISO – International Organizations for Standardization
+IETF – Internet Engineering Task Force
+WLAN – Wireless Local Area Network
+LLC – Logical Link Control
+MAC – Medium Access Control
+ISOC – Internet Society
+WECA – Wireless Ethernet Compatibility 
+RF – Radio Frequency
+WIDS – Wireless Intrusion Detection System
+WIPS – Wireless Intrusion Prevention System
+WEP – Wired Equivalent Privacy
+RSN – Robust Security Network
+CCMP – Counter Mode with Cipher Block Chaining Message Authentication Code Protocol
+AES – Advanced Encryption Standard
+TKIP – Temporary Key Integrity Protocol
+PSK – Pre-shared Key
+EAP – Extensible Authentication Protocol
+RSNA – Robust Security Network Association
+TSN – Transition Security Network
+FT – Fast Basic Service Set Transition
+RADIUS – Remote Dial-In User Server
+MSDU – MAC Service Data Unit
+ICV – Integrity Check Value
+IV – Initialization Vector
+ASCII – American Standard Code for Information Interchange
+CRC – Cyclic Redundancy Check
+ICV – Integrity Check Value
+PPTP – Point-to-Point Tunnelling Protocol
+IPSec – Internet Protocol Security
+L2TP – Layer 2 Tunnelling Protocol
+MPPE – Microsoft Point-to-Point Encryption
+MS-CHAP – Microsoft Challenge Handshake Authentication Protocol
+ISAKMP – Internet Security Association and Key Management Protocol
+SA – Security Association
+IKE – Internet Key Exchange
+AH – Authentication Header
+ESP – Encapsulating Security Payload
+MD5 – Message Digest 5
+SHA – Secure Hash Algorithm
+HMAC – Hashed Message Authentication Code
+DES – Data Encryption Standard
+AES – Advanced Encryption Standard
+OUI – Organizational Unique Identifier
+WPA – Wi-Fi Protected Access
+VoWiFi – Voice over Wi-Fi
+SSID – Service Set Identifier
+ESSID – Extended Service Set Identifier
+SSL – Secure Socket Layer
+MPDU – MAC Protocol Data Unit
+FCS – Frame Check Sequence
+TSC – TKIP Sequence Counter
+MIC – Message Integrity Check
+CBC – Cipher Block Chaining
+PN – Packet Number
+AVP – Attribute Value Pair
+EAPOL – EAP over LAN
+PAP – Password Authentication Protocol
+PPP – Point-to-Point Protocol
+CHAP – Challenge Handshake Authentication Protocol
+MS-CHAP – Microsoft Challenge Handshake Authentication Protocol
+EAP-PEAP – Extensible Authentication Protocol, Protected Extensible Authentication Protocol
+EAP-TTLS – Extensible Authentication Protocol Tunnelled Transport Layer Security
+EAP-FAST – Extensible Authentication Protocol Flexible Authentication via Secure Tunnelling
+EAP-LEAP – Extensible Authentication Protocol, Lightweight Extensible Authentication Protocol
+EAP-GTC – Extensible Authentication Protocol Generic Token Card
+EAP-SIM – Extensible Authentication Protocol Subscriber Identity Module
+PTK – Pairwise Transient Key
+GTK – Group Temporal Key
+AKM – Authentication Key Management
+MSK – Master Session Key
+PRF – Pseudo Random Function
+STLS – Station-to-Station Link
+PMLSA – Pairwise Master Key Security Association
+PTKSA – Pairwise Transient Key Security Association
+GTKSA – Group Temporal Key Security Association
+SMKSA – STSL Master Key Security Association
+STKSA – STSL Transient Key Security Association
+PBKDF – Password-Based Key Generation Function
+WPS – Wi-Fi Protected Setup (WPS)
+PIN – Personal Information Number
+PBC – Push-Button Configuration
+USB – Universal Serial Bus
+RSSI – Received Signal Strength Indicator 
+DSM – Distribution System Medium
+RSNIE – Robust Security Network Information Element
+OKC – Opportunistic Key Caching
+HMAC – Keyed-Has Message Authentication Code
+MDIE – Mobility Domain Information Element
+MDID – Mobility Domain Identifier
+RRM – Radio Resource Measurement
+SCA – Single Channel Architecture
+PSPF – Public Secure Packet Forwarding
+RBAC – Role-Based Access Control
+SSL – Secure Socket Layer
+SDR – Software Defined Radio
+SNMP – Simple Network Management Protocol
+RSSI – Received Signal Strength Indicator
+LCI – Location Configuration Information
+TDoA – Time Difference of Arrival
+MWIDS – Mobile Wireless Intrusion Detection System
+DSSS – Direct Sequencing Spread Spectrum
+OFDM – Orthogonal Frequency Division Multiplexing
+FHSS – Frequency Hopping Spread Spectrum
+CTR – Counter Mode
+RAP – Remote Access Point
+IS – Integration Services
+DS – Distribution System
+DSS – Distribution System Services
+GRE – Generic Routing Encapsulation
+CAPWAP – Control and Provisioning of Wireless Access Points
+CC-AP – Cooperative Control Access Points
+UNII – Unlicensed National Information Infrastructure
+DFS – Dynamic Frequency Selection
+LBAC – Location-Based Access Control
+VRRP – Virtual Router Redundancy Protocol
+MIB – Management Information Base
+CLI – Command-Line Interface
+FIPS – Federal Information Processing Standard
+TEL – Tamper-Evident Label
+SSH – Secure Shell
+HTTPS – Hypertext Transport Protocol Secure
+WTP – Wireless Termination Point
+LWAPP – Lightweight Access Point Protocol
+DTLS – Datagram Transport Layer Security
+RADIUS – Remote Access Dial In User Server
+ACL – Access Control List
+SQL – Standard Query Language
+ODBC – Open Database Connectivity
+JDBC – Java Database Connectivity
+PKI – Public Key Infrastructure
+CA – Certificate Authority
+OUI – Organizationally Unique Identifier
+NAC – Network Access Control
+EEG –  Encryption Gateway
+RTLS – Real Time Location Systems
+
+
+
+
+
+
+
+
+
+
+Preamble
+	In 1971, the first official wireless computer communication network was developed by Norman Abramson, the question how to secure it was not mainly concerned. The network was called ALOHAnet, and it used low-cost ham-like radios. 
+	The era of 802.11 began in 1985 ruling by the U.S. Federal Communications Commission that released the ISM band for unlicensed use. Next, in 1991 NCR Corporation/AT&T (present Alcatel-Lucent and LSI Corporation) invented the precursor to 802.11 in Nieuwegein, the . The first wireless products were called WaveLan with maximum raw data rates of 1 Mbit/s and 2 Mbit/s. 
+	The original version of the standard IEEE 802.11 was release in 1997 and certified in 1999, but is today obsolete standard. Since that time the overall use of wireless equipment, devices, started to grow in geometric progression. Any new developed standardization should keep in mind the market place it could consume, thus the products must satisfy customer expectations, meaning, usefulness/price. 
+	Presently, almost any device could have a built in wireless mechanism, whether it’s wireless network card inside the computer box, GPS, mobile phones, routers, switches, watches, TV, cameras, etc. This variety of different equipment holding wireless connection for divergent purposes gives unique ability for “bad” guys to easily access the information within a device. Thus, the security question started to become more and more actual. 
+	Without properly protection, any user within a range of a wireless device can on purpose try to connect or “accidentally” establish a connection and access possible personal/confidential information. 
+	Nowadays, there are many different 802.11 standards, some of them are standardized fully, some are already at market, but officially still in draft position, and several are in developing stage with a possibility in the near future become a concrete standard. 
+	Since standard 802.11 become part of a worldwide market, many security mechanisms were realized to mitigate the risk for other people access network. Of course, it’s a two side medal, because of unstoppable people curiosity and every year increasing processing power, the security gets “hacked” and preservation mechanisms are circumvented.   
+The security became the first question for developers of hardware and software.
+Term of Reference
+	Different wireless security methods are constantly changes. New authentication/authorization/encryption combinations come into play to possibly secure the network before accessing it. Of course, wireless is just one of the many network parts that could exist within environment, but it should be protected as much as possible. The wireless network is already constantly together with us more than 10 years, and still it counts as one of the less secure environment. Unfortunately, the key security role and also the weakest point are “human”. You can establish the most expensive solution to secure your environment, but if users stick a note with his password for wireless network on a display or under the keyboard, anyone who notices it can use network without attempts to break it. 
+	The main aim of this research is to describe security mechanisms that are on the market, compare them and offer possible solutions for increasing security. 
+Remember, secure environment is only as strong as the weakest link. 
+
+
+
+Defended Thesis
+
+Thesis defended is the following:
+Offer the most stable authentication schema for wireless network;
+Modify the EAP-TLS authentication schema in order to reach robust network security association infrastructure, close to absolute security;
+Suggest the hybrid solution for authorization and accounting, by involving native and third-party clarifications.
+
+
+
+
+
+
+
+Wireless Security
+According to the 2008 WLAN State-of-the-Market survey published by Distributed Marketing Associates, 802.11 (Wi-Fi) wireless LANs have pervaded mainstream enterprises; 47 percent of those surveyed have deployed WLANs for over half of their workforce. But, despite recent advances in technology, security continues to be cited as the number one challenge. 
+Without adequate safeguards, wireless can open corporate networks to new attacks, from war driving and password cracking to rogues and Evil Twins. To prevent Wi-Fi from becoming the weak link in your network's armor, it is essential to understand the business risks posed by wireless, countermeasures that can reduce those risks, and industry best practices for designing, deploying and monitoring secure wireless LANs. 
+Introduction
+Communication systems that rely on cabling are inherently faster, more reliable, and more secure than wireless systems. Installing a cabling infrastructure can be expensive. Furthermore, if the network traverses public highways, it is subject to regulation and requires the services of a licensed operator. Wireless communication has the advantage of mobility and obviates the need for cabling, but the radio frequency spectrum is also heavily regulated. Nevertheless, the allocation of unlicensed parts of the spectrum has facilitated the growth in wireless local area networks (WLANs).
+The European Telecommunications Standards Institute (ETSI) published the first WLAN standard, HiperLAN/1, finalised in 1995, and followed by HiperLAN/2 in 2000. However, it is the IEEE 802.11 WLAN standard that has become the most widely accepted. Portable devices such as laptops, personal digital assistants (PDAs) and even mobile phones have 802.11 chipsets built in as standard. Furthermore, wireless infrastructure equipment (access-points) is relatively inexpensive. 
+WLAN technology has progressed at a rapid pace. The original IEEE 802.11 standard supported data rates up to 2 Mb/s. At the time of writing this book, devices capable of 54 Mb/s are commonplace. Furthermore, devices that utilise MIMO (multiple input, multiple output) technology, which can support up to 300 Mb/s, are growing in popularity. The 802.11 standard has been very successful in incorporating advances in modulation techniques while maintaining interoperability with legacy schemes. New modulation schemes, however, do not replace subsequent schemes. 802.11 can select any scheme from the current set of modulation schemes in order to optimise frame transmission. In this way, wireless devices can link rate adapt according to the channel conditions. 
+802.11 have not been without its problems, especially with regard to security. WLANs are particularly vulnerable to eavesdropping, unauthorised access and denial of service due to their broadcast nature. The original 802.11 standard had no security provisions at all, neither authentication, encryption or data integrity. Some access-point vendors offered authentication of the client’s physical address. The standard was amended in 1999 to support a basic protection mechanism. Wired equivalent privacy (WEP) used cryptographic methods for authentication and encryption. The security flaws in WEP, however, have given rise to a complete research field. In 2001, Fluhrer, Mantin, and Shamir showed that the WEP key could be obtained within a couple hours with just a consumer computer [11]. The authors highlighted a weakness in RC4’s key scheduling algorithm and showed that it was possible to derive the key merely by collecting encrypted frames and analysing them. Since then, more sophisticated WEP attacks have been developed. Along with advances in computing power, the WEP key can be recovered in seconds. A further vulnerability with WEP is that the pre-shared key is common to all users on the same SSID. Any user associated with an SSID, therefore, can decrypt packets of other users on the same SSID.
+These problems have largely been resolved with the deprecation of WEP and the introduction of enhanced security methods. As with the introduction of new modulation techniques, interoperability is an issue. The current security methods rely on modern cryptography techniques which are only available on new devices. On legacy devices, interim solutions have been adopted.
+802.11 Wi-Fi Amendments
+802.11 IEEE Radio Ethernet Standard – the first WLAN standard created in 1997. This standard is similar to the 802.3 Ethernet networks, but uses wireless waves instead of a physical structure. Computer communication is happening in 2.4, 3.6, 5 and 60 GHz frequency bands. These standards provide the basis for wireless network products using the Wi-Fi brand. 
+Presently, there are a lot different IEEE 802.11 standards available on the market:
+802.11 – Authentic standard. This genuine standard keeps data transmission through the radio channels at a rate of 1 and 2 (optional) Mbit/s;
+802.11a – High-speed WLAN standard. First improved version of original Wi-Fi standard. Maximum speed without losses is 54 Mbit/s, and operating on 5 GHz band. Indoor signal range of up to 35 meters. Unfortunately, not compatible with 802.11b devices;
+ 802.11b – Most common standard type. Utmost popular and inexpensive network solution. Operating on 2.4 GHz band and max speed varying up to 11 Mbit/s over the radio channels. Much cordless phone use the same band range 2.4 GHz and can interfere with 802.11b network;
+802.11c – The standards governing the operation of a wireless bridge. It is a special amendment to the IEEE 8021D MAC bridging standard to incorporate bridging in wireless bridges or APs; 
+802.11d – Wireless specification for operation in additional regulatory domains. Standard defines the requirements for physical channel parameters (radiation power and frequency range), and wireless network devices to ensure they are in accordance with the legal provisions in different countries;
+802.11e – The standards that defines a set of QoS enhancements for wireless LAN applications through modifications to the MAC layer. Specifically its standard is related to the determining the priority-setting mechanisms of different types of traffic, like audio and video; 
+802.11F – Also known as Inter-Access Point Protocol that provides WAP communications among multivendor systems. The protocol is designed for the enforcement of unique association throughout an ESS and for secure exchange of station’s security context between the current AP and the new AP during the handoff period;
+802.11g – An addition standard to the modulation frequencies of 2.4 GHz. It is meant to ensure the transmission rate up to 54 Mbits/s through radio channels in the 2.4 GHz range. Carry out backward compatibility with 802.11b standard; 
+802.11h – The development if this standard is associated with problems using 802.11a in , because of the used band range of 5 GHz that is working on several satellite communications systems. In order to prevent interference the 802.11h standard has specific “Kvaziintellectual” control mechanism with radiation-bearing capacity and transmission frequency selection. Generally, standard describes the frequency of 5 GHz spectrum management for use in Europe and ;
+802.11i (WPA2) – The specification is essentially aimed at increasing the security of the wireless network. It realized the protective function for the mechanisms that exchanges information (packets) over secure network, most complex technology is AES encryption algorithm, which is capable to handle the keys with 128, 192, 256 bits. It used in most modern security protocols like 802.1X, TKIP, AES and etc.; 
+802.11j – Standard designed specifically for Japanese market. It allows Wireless LAN operation in the 4.9 to 5 GHz band to conform to the Japanese rules for radio operation for indoor, outdoor and mobile applications;
+802.11n – Special wireless networking standard to improve network throughput, with a significant increase in the maximum net data rate from 54 Mbit/s to 600 Mbit/s (slightly higher gross bit rate including for example error-correction codes, and slightly lower maximum throughput) with the use of four spatial streams at a channel width of 40 MHz. 802.11n standardized support for MIMO and frame aggregation, and security improvements, among other features;
+802.11r – Also known as fast BSS transmission. This standard provides a universal and common roaming system in order to be able to switch from one user to the other areas; 
+802.11s – Standard defines how wireless devices can interconnect to create a WLAN mesh network, which may be used for static topologies and ad-hoc networks;
+802.11u – Standard for mobile communication devices such as laptop computers or multi-mode phones to join a wireless local area network (WLAN);
+802.11v – Standard allow configuration of client devices while connected to wireless networks and give a possibility to client devices to exchange information about the network topology, thus, making each client network aware, facilitating overall improvement of the wireless network;
+802.11w – Standard defines “frame” types for use in management and control of wireless links. The objective is to increase the security by providing data confidentiality of management frames, mechanisms that enable data integrity, data origin authenticity, and replay protection; 
+802.11y – Standard that enables high powered data transfer equipment to operate on a co-primary basis in the 3650 to 3700 MHz band specifically in the , except when near a grandfathered satellite earth station; 
+802.11z – Standard defines mechanisms that allow IEEE 802.11 to set up a direct link between client devices while also remaining associated with the AP. These mechanisms are referred to as Tunnelled Direct Link Setup;
+802.11ad – A possible future standard with Gigabit wireless network speed. The Wireless Gigabit Alliance (WiGig) is an organization promoting the adoption of multi-gigabit speed wireless communications technology operating over the unlicensed 60GHz frequency band. 
+From all existing Wi-Fi standards four are the most commonly used: 802.11b, 802.11g, 802.11a, 802.11n. Despite the fact that 802.11n is still officially is not a standard, I suppose in near future it will have an official basis. Various equipment have a built in automation feature for 802.11n technology, which allows automatically to choose the relevant network, whether it’s 802.11a/b/g, otherwise, the technology will be denied by public quickly.
+The new feature for 802.11n standard is Multiple-Input Multiple-Output (MIMO) and a possibility to operate at 40 MHz band channels that use twice as much bandwidth to double throughput. Legacy 802.11 products use channels that are approximately 20 MHz wide. MIMO allows receiving and/or transmitting simultaneously through multiple antennas, in other words, the more antennas in use, the higher possible data rate. 
+The following table shows us the most commonly used standards basic comparison for 802.11b, 802.11g, 802.11a, and 802.11n standards, its frequency bands, typical data rate, max data rate, and possible operating range.
+Table 1: Comparison table for 802.11b, 802.11g, 802.11a, 802.11n
+
+	802.11b standard was developed in 1999, but appeared on market in early 2000. This standard is a direct extension of the modulation technique defined in the original standard. As we see from a table 1, the maximum raw data rate could be 11 Mbit/s, but in real world scenario the speed is not more than 4.5 Mbit/s. The main cause of speed reduction is interference with other products operating in the 2.4 GHz band, like microwave ovens, Bluetooth, baby monitors, cordless telephones and possible amateur equipment.
+	802.11g come into play in June 2003, and it’s a third modulation standard. Operation band is the same as for 802.11b 2.4 GHz, but uses the same Orthogonal Frequency Division Multiplexing (OFDM) based transmission scheme, like as 802.11a. The theoretical raw data rate could reach 54 Mbit/s, and average is 19 Mbit/s. Advantages are backward compatibility with 802.11b and in year 2003, most dual-band 802.11a/b products became dual-band/tri-mode, support a and b/g in a single adapter card or access point. Unfortunately, like 802.11b, 802.11g also suffer interference from other products operating at 2.4 GHz band, for example wireless keyboard.
+	802.11a standard uses the same data link protocol and frame format as the original standard, but an OFDM based air interface (physical layer). The operation band is different from 802.11g/b and is 5 GHz range with a maximum raw data rate 54 Mbit/s, plus error correction code. Disadvantages are small wavelength, thus cannot penetrate big obstacles, thus speed gets lower quicker than for 802.11b/g. 
+	802.11n is a special amendment which adds MIMO. This standard can operate at both 2.4 GHz and 5 GHz bands. The theoretical raw data rate could be 600 Mbit/s, but real is 54 Mbit/s. 
+Security Standards and International Organizations
+	The International Organization for Standardization (ISO) – Created the Open Systems Interconnection (OSI) model, architectural model for data communications.
+	The  and Electronics Engineering (IEEE) – Creates standards for compatibility and coexistence between networking equipment.
+	The Internet Engineering Task Force (IETF) – Responsible for creating Internet standards.
+	The Wi-Fi  – Responsible for conducting certification testing to make sure wireless networking equipment conforms to the 802.11 WLAN communication guidelines. 
+The ISO is responsible for the creation of the OSI model. The seven layers of the OSI model are as follows:
+Layer 7 – Application;
+Layer 6 – Presentation;
+Layer 5 – Session;
+Layer 4 – Transport;
+Layer 3 – Network;
+Layer 2 – Data-Link;
+Logical Link Control(LLC) sub-layer;
+Medium Access Control (MAC) sub-layer.
+Layer 1 – Physical.
+The IEEE 802.11 – 2007 standard defines communication mechanisms only at the Physical layer and MAC sub-layer of the Data Link layer of the OSI model.
+	The IEEE’s mission is to “foster technological innovation and excellence for the benefit of humanity”. The IEEE 802.11 working group is responsible for creating the WLAN standards. It is important to remember that the IEEE standards, like many other standards, are written documents describing how technical processes and equipment should function. 
+	The mission of the IETF, as defined by the organization in a document known as RFC 3935, is “to produce high quality, relevant technical and engineering documents that influence the way people design, use, and manage the Internet is such a way as to make the Internet work better”. The IETF is one of five main groups that are part of the Internet Society (ISOC). 
+The following Figure 1: Is shown the whole ISOC structure.
+
+Figure 1: ISOC and its Relationship 
+Originally named Wireless Ethernet Compatibility Alliance (WECA), the primary tasks of the Wi-Fi Alliance is to market the Wi-Fi brand and raise consumer awareness of new 802.11 technologies as they become available. This certification includes not only radio interoperability such as 802.11a and 802.11b, but also certification of additional capabilities such as security, multimedia, convergence, and supported special features. 
+	The IEEE defines the 802.11 communications at the Physical layer and the MAC sub-layer of the Data-Link layer.
+	To understand the 802.11 technology completely, you need to have a clear concept of how wireless technology works at the Physical layer of the OSI model, and at the heart of the Physical layer is Radio Frequency (RF) communications. 
+	Network design concepts:
+Core – The core of the network is a high-speed backbone or the superhighway of the network. The goal of the core is to carry large amount of information between key data centres or distribution areas;
+Distribution – The distribution layer routes traffic between virtual LANs and subnets; 
+Access – The access layer of the network is responsible for a delivery of the traffic directory to the end user or end node.
+Wireless networking can be implemented as either point-to-point or point-to-multipoint solutions. 
+Basic Security Concepts
+	When you’re securing a wireless 802.11 networks, five major components are typically required:
+Data privacy;
+Authentication, authorization, and accounting (AAA);
+Segmentation;
+Monitoring;
+Policy.
+802.11 wireless networks operate in license-free frequency band, and all data transmission travel in the open air. Therefore, using cipher encryption technologies to obscure information is mandatory to provide proper data privacy in wireless networks. A cipher is an algorithm used to perform encryption. The encryption/decryption process is shown in figure 2. 
+
+
+Figure 2: encryption/decryption process
+	
+In the computer and networking industries, the process of converting plaintext into ciphertext is commonly referred to as encryption, and the process of converting ciphertext back to plaintext is commonly referred to as decryption. 
+Another concept is steganography, strives to hide the fact that there is a message.
+This is often referred to as “security through obscurity”. 
+Common computer security concepts:
+Authentication – Is the verification of use identity and credentials;
+Authorization – Involves granting access to network resources and services;
+Accounting – Is tracking the use of network resources by users.
+Segmentation is a way how user movement within a network itself is controlled.
+Segmentation could be achieved through a variety of means, including firewalls, routers, VPNs, and VLANs. Segmentation is also intertwind with role-based access control (RBAC). 
+	Monitoring – Is referred to ensure established network policies are not violated. You can implement Wireless Intrusion Detection System (WIDS) and Wireless Intrusion Prevention System (WIPS). 
+	Policy - WLAN security policies must be clearly defined and enforced to solidify the effectiveness of all WLAN security components. In most countries, mandated regulations exist for protecting and securing data communications within all government agencies. WLAN policy enforcement is needed to meet compliance mandates set forth by these regulations. 
+ History of Wireless Security
+	For seven years, the only defined method of encryption in an 802.11 network was the use of 64-bit static encryption called Wired Equivalent Privacy (WEP). It’s cracked and is not considered an acceptable means of providing data privacy.
+	The default authentication method for 802.11 standards is open system authentication and another method is shared key authentication. 
+	The 802.11i amendment (published as IEEE Std. 802.11i-2004), defines a robust security network (RSN). Confidentiality needs use a stronger encryption method called counter mode with cipher block containing message authentication code protocol (CCMP), which uses the advanced encryption standard (AES) algorithm. Also 802.11i defines an optional encryption method known as temporal key integrity protocol (TKIP), which uses the RC-4 stream cipher algorithm. Authentication could be implemented using either an IEEE 802.1X or preshared keys (PSKs). An 802.11i requires the use of an extensible authentication protocol (EAP).
+	The current 802.11-2007 standard requires the use of 802.1 X/EAP authentication methods for enterprise and the use of a preshared key or a passphrase in a  environment. CCMP/AES encryption is the default encryption method, while TKIP/RC4 is an optional encryption method. 
+
+Figure 3: Security standards and certifications
+	The 802.11-2007 standards define what is known as a robust security network (RSN) and robust security network associations (RSNAs). Two stations must establish a procedure to authenticate and associate with each other as well as create dynamic encryption keys through a process known as the 4-Way Handshake. The 802.11-2007 standards do allow for the creation of pre-robust security network associations (pre-RSNAs) as well as RSNAs. Legacy security measures can be supported in the same basic service set (BSS) along with RSN-security-defined mechanisms. A transition security network (TSN) supports RSN-deigned security as well as legacy security such as WEP within the same BSS.
+	The 802.11r amendment is known as the fast basic service set transition (FT) amendment. The technology is more often referred to as fast secure roaming because it defines faster handoffs when roaming occurs between cells in a WLAN using the strong security defined by a robust secure network (RSN). Tactical enterprise deployments of this technology will be extremely important for providing more secure communications for Wi-Fi. 
+	The 802.11k, an access point or WLAN controller will request a station to listen for neighbour access points on other channels and gather information. The current AP or WLAN controller will then process that information and generate a neighbour report detailing available access points from best to worst. 
+	The 802.11w amendment is also known as the “protected” management frame amendment because of the goal of delivering certain 802.11 management frames in a secure manner. During the IPSec configuration, you can choose authentication header (AH) or encapsulating security payload (ESP). AH only provide authentication. ESP provides encryption and authentication of the IP packets. 
+	IPSec uses Message Digest 5 (MD5) or secure hash algorithm (SHA-1) hash functions in the IKE Authentication. These hash algorithms are evolved into hashed message authentication codes (HMAC). IPSec supports data encryption standard (DES), triple des (3DES), and advanced encryption standard (AES). Device authentication is achieved by using either a server-side certificate or a preshared key. 
+   Summary
+802.11 IEEE Radio Ethernet Standard – the first WLAN standard created in 1997. This standard is similar to the 802.3 Ethernet networks, but uses wireless waves instead of a physical structure. Computer communication is happening in 2.4, 3.6, 5 and 60 GHz frequency bands. These standards provide the basis for wireless network products using the Wi-Fi brand.
+Main IEEE standards that exist on market are 802.11a, 802.11b, 802.11g, and 802.11n. Various IEEE standard amendments exist, the main are 802.11k, 802.11r, 802.11i, 802.11w.
+The most important amendment concerning master degree topic is 802.11i that was specifically developed to introduce new security features for Wi-Fi network.
+Main amendments for Wi-Fi are done at OSI layer 2, directly within two sub-layers: Link-local control and medium access control.
+The main organisations involved into developing, testing, certifying and distributing are:
+IEEE – The Institute of Electrical and Electronics Engineering;
+ISO – The International Organization for Standardization;
+IETF – The Internet Engineering Task Force;
+Wi-Fi Alliance;
+WECA – The Wireless Ethernet Compatibility Alliance.
+In the next chapter we will have a look at various authentication methods and encryption mechanisms, its weak points.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. Legacy Systems Security Approach
+	A legacy system is an old method, technology, computer system, or application program. The legacy system may or may not remain in use. Even if it is no longer used, it may continue to impact the organization due to its historical role. Historic data may not have been converted into the new system format and may exist within the new system with the use of a customized schema crosswalk, or may exist only in a data warehouse. In either case, the effect on business intelligence and operational reporting can be significant. For a variety of reasons, a legacy system may continue to be used, sometimes well past its vendor-supported lifetime, resulting in support and maintenance challenges. It may be that the system still provides for the users' needs, even though newer technology or more efficient methods of performing a task are now available. However, the decision to keep an old system may be influenced by economic reasons such as return on investment challenges or vendor lock-in, the inherent challenges of change management, or a variety of other reasons other than functionality. A legacy system may include procedures or terminology which are no longer relevant in the current context, and may hinder or confuse understanding of the methods or technologies used.
+Authentication is the first of two steps required to connect to the 802.11 basic service set. The 802.11-2007 standards specify two different methods of authentication:
+Authentication Processes
+Open System Authentication – Is the only pre-RSNA security mechanisms that has not been deprecated. Within a basic service set, open system authentication occurs when an exchange of frames between the client station and access point station. Open system authentication and association between the client STA and AP still occurs prior to the 802.1X/EAP authentication exchange between the client STA and a RADIUS server. 
+
+
+			Figure 4: Open system authentication
+
+Figure 5: Open system and 802.1 X/EAP authentications
+Share Key Authentication – Uses WEP to authenticate client stations and requires that a static WEP key be configured on both the client STA and the AP. Share key authentication is a four-way authentication frame exchange. 
+Wired equivalent privacy (WEP) encryption is a layer 2 encryption method that uses the RC4 streaming cipher. The payload of an 802.11 data frame is called the mac service data unit (MSDU). The original 802.11 defines both 64-bit and 128-bit WEP. A data integrity checksum, known as the integrity check value (ICV), is compared on data before encryption and used to prevent data from being modified. The 802.11-2007 standards refer to the 64-bit version as WEP-40 and the 128-bit WEP version as WEP-104. 64-bit WEP uses a secret 40-bit static key, which is combined with a 24-bit number selected by the card’s device drivers. This 24-bit number, known as the initialization vector (IV), is sent in clear text and a new IV is created for every frame. WEP key should use ASCII characters. WEP runs a cyclic redundancy check (CRC) on the plaintext data that is to be encrypted and then appends the integrity check value (ICV) to the end of the plaintext date. 
+
+Figure 5: WEP encryption process
+
+WEP four main weaknesses based on attack function:
+IV Collision Attack – After 16 million IVs will eventually be used and will be forced to repeat themselves in a busy WEP-encrypted network;
+Weak Key Attack – Because of the RC4 key-scheduling algorithm, weak IV keys are generated;
+Reinjection Attack – Hacker tools exists that implement a packet reinjection attack to accelerate the collection of weak IVs on a network with little traffic;
+Bit-Flipping Attack – The ICV data integrity check is considered weak. WEP encrypted packets can be tampered with.
+WEP encryption is considered a legacy pre-RSNA security method.
+	VPN for Wireless communication is not referred to a secure connection anymore, but still we can see many different implementations.
+
+Figure 6: VPN and WLAN client access security
+
+The three major protocols used in layer 3 VPN technologies are point-to-point tunnelling protocol (PPTP), internet protocol security (IPSec), and layer 2 tunnelling protocol (L2TP). As I mentioned WEP encryption was cracked, and is not secure anymore. A better solution would be 802.1X/EAP which requires that all security credentials and transactions be completed before any layer 3 connectivity is even possible.
+	PPTP does not provide encryption or confidentiality. PPTP uses 128-bit Microsoft point-to-point encryption (MPPE), which uses the RC4 algorithm. PPTP uses Microsoft challenge handshake authentication protocol (MS-CHAP). 
+	L2TP does not provide encryption or confidentiality. L2TP is using IPSec to provide confidentiality, authentication, and integrity. 
+	IPSec can be configured for transport mode or tunnel mode. Transport mode – only payload is encrypted. Tunnel mode – the payload, header, and routing information are all encrypted. IPSec VPN use public and private key cryptography. 
+	Internet security association and key management protocol (ISAKMP) is protocol used to establish security associations (SA) and cryptographic keys. ISAKMP uses internet key exchange (IKE and IKEv2) protocol to set up SA. IKE uses a diffie-hellman key exchange to establish a shared session secret.
+	Media access control (MAC) is a 12-character hex number. MAC filters can be configured either to allow or deny traffic from specific MAC addresses. It should be noted, however, that MAC addresses can be spoofed, or impersonated, and any amateur hacker can easily bypass any MAC filter by spoofing an allowed client station’s address. Best practices dictate an extra layer of security by segmenting the handheld devices in a separate VLAN with a MAC filter based on the manufacture’s organizationally unique identifier (OUI) address (the first three octets of the MAC address). 
+	In a WLAN environment using enterprise class autonomous APs, SSIDs can typically be mapped to individual VLANs, and users can be segmented by the SSID/VLAN pair, all while communicating through a single access point. Each SSID can also be configured with separate security settings. The combination between WPA2-Personal for VoWiFi and WPA2-Enterprise for data transmission. 
+	Access points typically have a setting called closed network or broadcast SSID. The service set identifier (SSID), which is also referred to the extended service set identifier (ESSID), is the logical identifier, of a WLAN. Cloaking the SSID usually keeps the SSID hidden from most WLAN discovery tools that use null probe request. 
+Encryption Ciphers and Proceedings
+	When using a symmetric algorithm, both the encrypting and decrypting parties share the same key. WEP, TKIP, and CCMP are encryption methods that all use symmetric algorithms.
+	Instead of using a single shared key, asymmetric algorithm use a pair of keys. The decryption key is typically kept secret and is known as the private key, or “secret key.” The encryption key is shared and is referred to as the public key. 
+
+
+				Figure 7: Asymmetric keys
+
+	During the cryptographic process, the plaintext needs to be combined with random data bits to create the ciphertext. A stream cipher is a symmetric key cipher where plaintext bits are combined with a pseudorandom cipher bit stream called the keystream. The stream cipher then combines the plaintext with the keystream, typically using a Boolean exclusive-OR (XOR) stream. When an XOR is used with a shared key, the same key will successfully encrypt and then decrypt the data.
+
+Figure 8: XOR function
+
+	Another common method of creating the ciphertext is using a block cipher. A block cipher takes a fixed-length block of plaintext and generates a block of ciphertext of the same length. A block cipher is a symmetric key cipher. The fixed length of the blocks is referred to as the block size, with block sizes often ranging from 64 bits up to 256 bits. 
+	RC4 is a stream cipher. RC4 is fast and simple, and it is widely used in protocols such as WEP and secure socket layer (SSL). Due to weaknesses in the cipher, it is not recommended for use in newer networks. 
+	RC5 is a symmetric block cipher. RC5 allows for a variable block size, a variable key size, and a variable number of rounds. The block size can be set to 32, 64, or 128 bits; the key size can range from 0 bits to 2040 bits; and the number of rounds can range from 0 to 255. The key table is used for both encryption and decryption.
+	DES is a symmetric block cipher, uses a 56-bit symmetric key. DES has a 64-bit block size and a 64-bit key; however, 8 bits are used for checking parity and are discarded, so the effective key length is 56 bits. 
+	3DES is a symmetric block cipher, which is made up of three DES keys (K1, , and K3), each with an effective key length of 56 bits. DES performs 48 DES-equivalent rounds on each block. 3DES defines three keying options:
+Keying Option 1: All three keys are unique;
+Keying Option 2: K1 and  are unique, but K3 = K1;
+Keying Option 3: All three keys are identical.
+	AES encryption uses an algorithm that is a symmetric block cipher which supports three key sizes of 128, 192, and 256 bits. AES is used by the 802.11 encryption protocol CCMP, which officially became part of wireless security when 802.11i was ratified in June 2004. 
+	AES uses a fixed block size of 128 bits, which is actually a 434 array of bytes, called a state. The number of rounds: AES-128 10 rounds, AES-192 12 rounds, AES-256 14 rounds. 
+	The 802.11-2007 standards define three encryption methods that operate at Layer 2 of the OSI model: WEP, TKIP, and CCMP.  
+	The technical name for an 802.11 data frame is mac protocol data unit (MPDU).
+The 802.11 data frame, contains a Layer 2 MAC header, a frame body, and a trailer, which is a 32-bit CRC known as the frame check sequence (FCS). Encapsulated inside the frame body of an 802.11 data frame is an upper-layer payload called the mac service data unit (MSDU).
+
+Figure 9: 802.11 MAC protocol data unit (MSDU)
+
+Wired Equivalent Privacy
+WEP is a Layer 2 security protocol that uses the RC4 streaming cipher. The current 802.11-2007 standard still defines WEP as a legacy encryption method for pre-RSNA security.  
+	To create the WEP-encrypted MSDU, WEP runs a CRC on the plaintext data that is to be encrypted and then appends the ICV to the end of the plaintext data. The ICV adds 32 bits (4 octets) of overhead to an 802.11 data frame. Remember, that WEP encrypts the MSDU upper-layer payload that is encapsulated in the frame body of an MPDU. WEP encryption adds 8 bytes of overhead to an 802.11 MPDU, and 802.11 data frame is expanded by 8 bytes to a maximum of 2312 bytes. 
+	
+Figure 10: WEP MPDU format
+The encryption and decryption process for WEP is the same whether you are using WEP - 40 or WEP - 104. Figure 10 shows the WEP frame body, which contains an encrypted MSDU. To create the WEP-encrypted MSDU, WEP runs a cyclic redundancy check (CRC) on the plaintext data that is to be encrypted and then appends the Integrity Check Value (ICV) to the end of the plaintext data. The ICV adds 32 bits (4 octets) of overhead to an 802.11 data frame. The data and ICV are then encrypted. WEP can be configured with up to four different keys. A Key ID identifies which WEP key was combined with the system generated 24 - bit Initialization Vector (IV) to perform the encryption. This 24 - bit IV is combined with the KEY ID and 6 bits of padding to create a 32 - bit IV. The IV adds 32 bits (4 octets) of overhead to the frame body of an 802.11 data frame. The IV is not encrypted and is appended to the front of the encrypted MSDU payload.
+Remember that WEP encrypts the MSDU upper - layer payload that is encapsulated in the frame body of an MPDU. The MSDU payload has a maximum size of 2,304 bytes.
+Because the IV adds 4 octets and the ICV also adds 4 octets, when WEP is enabled, the entire size of the body inside an 802.11 data frame is expanded by 8 bytes to a maximum of 2312 bytes. In other words, WEP encryption adds 8 bytes of overhead to an 802.11 MPDU. 
+Temporal Key Integrity Protocol
+Like WEP, TKIP uses the RC4 algorithm for performing its encryption and decryption processes. TKIP modifies WEP as follows, figure 11:
+Temporal Keys – TKIP uses dynamically created encryption keys. Any two radios use a 4-Way Handshake process to create dynamic unicast keys that are unique to those two radios; 
+Sequencing – TKIP uses a pre-MPDU TKIP sequence counter (TSC) to sequence the MPDUs it sends; 
+Key Mixing – Uses a complex two-phase cryptographic mixing process to create stronger seeding material for the RC4 cipher;
+Enhanced Data Integrity – Uses a stronger data integrity check known as the message integrity check (MIC). 
+TKIP countermeasures:
+Logging – MIC failure would indicate an active attack;
+60 Second Shutdown – If two MIC failures occur within 60 seconds of each other, the STA or AP must disable all reception of TKIP frames for 60 seconds;
+New Temporal Keys – As an additional security feature, the Pairwise Transient Key (PTK) and the Group Temporal Key (GTK) should be changed.
+The encrypted frame body of TKIP MPDU is made up of five key pieces:
+IV/Key ID;
+Extended IV;
+MSDU payload;
+MIC;
+ICV.
+
+
+
+Figure 11: TKIP MPDU
+
+It begins with the IV/Key ID combination. This is 4 octets in size and is similar to the IV/KEY ID that is found in WEP. TSC0 and TSC1, the first two octets of the 48 - bit TKIP sequence counter (TSC0 and TSC1), make up part of the IV/Key ID. If TKIP is being used, which is the case in this example, the Extended IV field is set to 1, indicating that an extended IV of 4 octets will follow the original IV. The Extended IV is 4 octets and is made up of the other 4 octets of the 48 - bit TKIP sequence counter (TSC2 through TSC5). Both the original IV and the Extended IV are not encrypted. The 8 bytes that comprise the IV/ Key ID and Extended IV could be considered a TKIP header.
+After the original IV and the Extended IV comes the MSDU payload, followed by the 8 MIC octets, which is then followed by the 32 - bit Integrity Check Value (ICV) that was calculated on the MPDU. The MSDU upper - layer payload as well as the MIC and ICV are all encrypted. The frame is then completed by adding the 32 - bit frame check sequence (FCS) that is calculated over all the fields of the header and frame body.
+CCMP
+Counter mode with cipher-block chaining message authentication code protocol (CCMP) it was designed to replace TKIP and WEP and is part of the 802.11i security amendment. CCMP uses the AES block cipher. CCMP is made up of many different components. Counter mode is often represented as CTR. CTR is used to provide data confidentiality. The acronym for cipher-block chaining is CBC. CBC-MAC stands for cipher-block chaining message authentication code. The CBC-MAC used for authentication and integrity. 
+	The inputs used by the CCMP encryption/data integrity process include:
+Temporal Keys – Starts with 128-bit, can either be a pairwise transient key (PTK) used to encrypt unicast traffic or a group temporal key (GTK) used to decrypt broadcast and multicast traffic;
+Packet Number – The 48-bit Packet Number (PN) is much like a TKIP sequence number;
+Nonce – A nonce is a random numerical value that is generated one time only. A 104-bit unique nonce is constructed from the packet number, priority data used in QoS, and the transmitter address; 
+802.11 Data Frame (MPDU) – The frame body encapsulates the MSDU upper-layer payload that will be encrypted and protected by a Message Integrity Code;
+AAD – Additional authentication data (AAD) is constructed from portions of the MPDU header. This information I used for data integrity of portions of the MAC header. Receiving stations can then validate the integrity of these MAC header fields. 
+
+Figure 12: CCMP encryption and data integrity process
+
+CCMP encrypts the payload of a plaintext MPDU using the following steps:
+A 48 - bit packet number (PN) is created. Packet numbers increment with each individual MPDU, although they remain the same for retransmissions; 
+As shown in figure 13, certain fields in the MPDU header are used to construct the additional authentication data (AAD). The MIC provides integrity protection for these fields in the MAC header as well as for the frame body. All of the MAC addresses, including the BSSID, are protected. Portions of the other fields of the MAC header are also protected. Receiving stations will validate the integrity of these protected portions of the MAC header. For example, the frame type and the distribution bits that are subfields of the Frame Control field are protected. Receiving stations will validate the integrity of these protected portions of the MAC header. The AAD does not include the header Duration field, because the Duration field value can change due to normal IEEE 802.11 operation. For similar reasons, several subfields in the Frame Control field, the Sequence Control field, and the QoS Control field are masked to 0 and therefore are not protected. For example, the Retry bit and Power Management bits are also masked and are not protected by CCM integrity; 
+A nonce is created from the packet number (PN), the transmitter address (TA), and priority data used in QoS; 
+The 8 - octet CCMP header is constructed. The CCMP header includes the Key ID and the packet (PN), which is divided into 6 octets. You will notice that the construction of the CCMP header is basically identical to the 8 - octet TKIP header; 
+The CCM module, which uses the AES clock cipher, will now be used to create a data integrity check and encrypt the upper - layer data. The 128 - bit temporal key, the nonce, the AAD, and the plaintext data are then processed to create an 8 - byte MIC. The MSDU payload of the frame body and the MIC are then encrypted in 128 - bit blocks. This process is known as CCM originator processing; 
+The original MAC header is appended to the CCMP header, the encrypted MSDU, and the encrypted MIC. A frame check sequence (FCS) is calculated over all of the fields of the header and entire frame body. The resulting 32 - bit CRC is then placed in the FCS field. 
+
+
+				Figure 13: Additional authentication data
+
+CCMP PMDU
+	The first 32 bytes are the 802.11 MAC headers, which does not change. The frame body consists of the CCMP header, the MSDU upper-layer payload, and the MIC. The CCMP header includes the Key ID and the Packer (PN), which is divided into 6 octets. You will notice that the format of the CCMP header is basically identical to the format of the 8-octet TKIP header (IV/Extended IV). The CCMP header is not encrypted. The MSDU payload and the 8-byte MIC are encrypted.
+	The overhead that results from CCMP encryption includes CCMP header (8 bytes) and the MIC (8 bytes). When CCMP is enabled, the entire size of the frame body inside an MPDU is expanded by 16 bytes to a maximum of 2,320 bytes. In other words, CCMP encryption adds 16 bytes of overhead to an 802.11 MPDU. 
+
+				Figure 14: CCMP MPDU	
+
+Figure 14 shows the CCMP MPDU. The first 32 bytes are the 802.11 MAC headers, which does not change. The frame body consists of the CCMP header, the MSDU upper - layer payload, and the MIC. The CCMP header includes the Key ID and the packet (PN), which is divided into 6 octets. You will notice that the format of the CCMP header is basically identical to the format of the 8 - octet TKIP header (IV/Extended IV). The CCMP header is not encrypted. The MSDU payload and the 8 - byte MIC are encrypted. The overhead that results from CCMP encryption includes CCMP header (8 bytes) and the MIC (8 bytes). When CCMP is enabled, the entire size of the frame body inside an MPDU is expanded by 16 bytes to a maximum of 2,320 bytes. In other words, CCMP encryption adds 16 bytes of overhead to an 802.11 MPDU. 
+	WPA only supports TKIP/RC4 dynamic encryption key generation. 802.1X/EAP authentication was required in the enterprise, and passphrase authentication was required in a  environment. The migration from TKIP to CCMP can be seen in the IEEE 802.11n amendment, which states that high throughput (HT) stations should not use WEP or TKIP when communicating with other stations that support stronger ciphers. 
+	WPA2 is a Wi-Fi Alliance certification that is a mirror of the IEEE 802.11i security amendment. WPA2 incorporates the AES algorithm in CCMP, providing government-grade security based on the NIST FIPS 140-2 compliant AES encryption algorithm WPA2 supports 802.1X/AWS authentication or pre-shared keys, and Is backward-compatible with WPA.
+Summary 
+The legacy authentication methods are mainly included:
+Open System Authentication;
+Shared Key Authentication.
+The encryption protocols that are used during the communication between two entities possibly could be wired equivalent privacy (WEP), temporal key integrity protocol (TKIP), and counter mode with cipher-block chaining message authentication code protocol (CCMP).
+WEP counts as first generation for providing encryption. It’s not counting as secure protocol within modern equipment’s.
+TKIP is a trying to ensure dynamic key between parties during communication. Both WEP and TKIP have main weakness points in a way of initialization vector (IV) which is used as seeding material and get sent in plain text.
+CCMP simultaneously with advanced encryption standard (AES) counts as one of the securest mechanisms at present days. The main advantage is block encryption, instead of stream encryption like in WEP and TKIP.
+ We also have a look at WEP, TKIP, CCMP medium access control protocol data unit (MPDU) and medium access control service data unit (MSDU). 
+In the next chapter we touch aspects of specifically authentication methods: the enterprise level authentication methods, legacy authentication methods, weak/strong authentication methods and miscellaneous authentication methods.
+
+
+
+
+
+
+
+Security Infrastructure
+Many WLANs grow organically, morphing from pilot projects into loose-knit production networks. But, like castles built of sand, these WLANs lack the firm foundation required to support a truly secure network. Today's Wi-Fi products implement many different security standards and features: WEP, WPA, WPA2, 802.1X, VPN, VLAN.
+Various peripheral equipment with different security mechanisms and operating ways are existing for wireless communication. Depends which schema is used for wireless transmission several services like integration, distribution, distinct controllers exist. 
+The proper architecture depends on infrastructure used, thus in order to isolate/mitigate the possibility to circumvent security mechanisms experts should be familiar with concepts involved and management components used.
+Architecture Capacities Examination
+Integration Services (IS)
+	The 802.11-2007 standards define an integration service (IS) that enables delivery of MSDUs between the distribution system (DS) and a non-IEEE-802.11 LAN, via a portal. Integration service is a frame format transfer method. The portal is usually either an AP or WLAN controller. The payload of a wireless 802.11 data frame is the Layer 3-7 information known as the MSDU. The job of integration service is to remove 802.11 header and trailer and then encase the MSDU VoIP payload inside an 802.3 frame. 
+Distribution System (DS)
+	The 802.11-2007 standards also define a distribution system (DS) that is used to interconnect a set of basic service sets (BSSs) via integrated LANs to create an extended service set (ESS). Consists of two components:
+Distribution System Medium (DSM) – A logical physical medium used to connect Aps;
+Distribution System Services (DSS) – System services built inside an AP or WLAN controller usually in the form of software. 
+Autonomous APs
+	The traditional AP is known as autonomous AP. The 802.11-2007 standards define operations starting with OSI layer 1, the physical layer, and ending with OSI layer 2, the MAC sub-layer of the data link layer. In autonomous AP, all the functions specified in the IEEE 802.11-2007 standard are implemented locally on each AP, which includes encryption, decryption, 802.1X authenticator functionality, distribution system and integration services etc. 
+	An autonomous AP is being referred to in IETF RFC documents as local-MAC AP. 
+WLAN Controllers
+	In the centralized WLAN architecture, autonomous APs have been replaced with controller-based APs also known as thin APs. A controller-based AP has minimal intelligence, and functionality is just radio card and an antenna. All the intelligence resides in a centralized WLAN controller, and the entire AP configuration settings are distributed to the controller-based APs from the WLAN controller and stored in the RAM of the controller based AP. 
+	A key feature of most WLAN controllers is that the integration service and distribution system service normally operate within the WLAN controller. 
+	An 802.11 frame cannot travel through an Ethernet 802.1 network by itself. Many WLAN vendors use generic routing encapsulation (GRE), which is a standards-based network tunnelling protocol. GRE can encapsulate the entire 802.11 frame inside an IP tunnel. 
+	Functions such as the 802.1X authenticator role reside at the controller, which helps limit the amount of overhead involved in 802.1X reauthentication to new APs. 
+	WLAN controllers are often referred to as wireless switches because they are indeed an Ethernet-managed switch that can process and route data at the data-link layer of the OSI model. WLAN controllers do fully support the creation of VLANs and 802.1Q VLAN tagging. 
+	WLAN controllers also support virtual WLANs, which are often called WLAN profiles. The WLAN profile is a set of configuration parameters that are configured on the WLAN controller. The WLAN profile parameters can include the WLAN logical name (SSID), WLAN security settings, and user VLAN assignment, and QoS parameters. 
+	Every WLAN has a logical name (SSID), and each WLAN BSS has a unique layer 2 identifier, the basic service set identifier (BSSID). The BSSID is typically the MAC address of the APs radio card. Each virtual WLAN is typically linked with a unique virtual BSSID. In other words, multiple 2/3 domains can exist within one Layer 1 contention domain. 
+	Split MAC - with this type of WLAN architecture, some of the MAC services are handheld by the WLAN controller, and some are handled by the controller-based AP.
+	In split-MAC architecture, many of the 802.11 management and control frame exchanges occur only between the client station and the controller-based AP and are not tunnelled back to the WLAN controller. The IETF has proposed a set of standards for WLAN controller protocols called control and provisioning of wireless access points (CAPWAP). 
+
+Mesh
+	Although not all mesh networks are created equal, the basic concept is that a root AP, knows a mesh point portal (MPP), would have a connection to the wired network and an additional node AP, known as a mesh point (MP), which can form a repeater relationship with the mesh point portal to expand the RF coverage area of the network. 
+	Although a WLAN mesh network can be a mesh of repeater-like access points that all operate on one frequency, dual-mesh mesh APs are now much more common. 
+	WLAN bridges operate in the distribution layer and are normally used to connect two or more wired networks together over a wireless link.
+	One side of the link is usually the root bridge and the other side is the nonroot bridge. The root bridge establishes the channel and beacons for the nonroot bridge to join. VPNs and an 802.1X/EAP can be used for bridge security.
+	Hybrid WLAN architectures make use of the significant computing power available today in the form of an ultra-fat AP known as a cooperative control access point (CC-AP). A CC-AP combines an autonomous AP with a suite of cooperative control protocols, without requiring a WLAN controller. The cooperative control protocols enable multiple CC-APs to be organized into groups that share control information between CC-APs to provide functions such as layer 2 roaming, layer 3 roaming, cooperative RF management, security, and mesh networking. 
+	IEEE 802.11 WLANs are allowed to use the 5 GHz UNII bands. 802.11h standard became the protocol that eventually was standardized and has been rolled up into the IEEE Std. 802.11-2007 version. This standard allows for dynamic frequency selection (DFS) in the 5 GHz band. Therefore, many 5 GHz WLANs are designed with a channel reuse pattern that excludes the DFS channels. 
+	Location-based access control (LBAC), which can be defined as location-aware security. LBAC allows you to prevent users, even valid users, from logging onto the WLAN from specified physical locations. 
+	WLAN controllers often implement virtual router redundancy protocol (VRRP) to provide for a standby solution should a WLAN controller fail. Several AP vendors have developed software mechanisms in individual APs to maintain a heartbeat connection in a similar fashion to the way failover protocols like VRRP operate. 
+Equipment Administration 
+Device management include:
+Firmware revisions;
+Configurations and changes;
+Monitoring and Incident response;
+Managing and filtering of device alerts and alarms;
+Performance monitoring.
+Protocols for Management
+	The following protocols are common for managing WLANs. Some of these protocols are based upon de jure standards and some are based upon de facto standards. 
+SNMP
+	Simple network management protocol (SNMP) is an Application layer protocol used to communicate directly with network devices. 
+	An SNMP management system contains:
+Several nodes, each with an SNMP agent containing command responder and notification originator applications;
+At least one SNMP entity containing command generator and/or notification receiver applications;
+A management protocol used to convey management information between the SNMP entities.
+Management Information is structured as a collection of managed objects contained in a database called a management information base (MIB). 
+	The MIB consist of the following definitions: modules, objects, and traps. The following versions of SNMP exist:
+SNMPv1 – Used a community string, which had to be known by a remote agent. Not encryption, it was subject to packet sniffing to discover the cleartext community string;
+SNMPv2 – Is referred as a community-based version. Also no encryption, packet sniffing possibility;
+SNMPv3 – Third generation of protocol. Authentication performed using SHA or MD5; Privacy uses DES 56-bit encryption based on the CBC-DES standard, Access control (usernames and passwords).
+	CLIs tend to be the raw, unedited configuration of devices and provide the ability to make specific changes quickly to device configurations. CLIs can be access using several methods:
+Serial and console ports;
+Telnet;
+SSH1/SSH2.
+Government regulations such as FIPS 140-2 may require that serial and console ports be secured with a tamper-evident label (TEL) to prevent unauthorized physical access to a WLAN infrastructure device such as a WLAN controller. 
+HTTPS
+	Hypertext transfer protocol secure (HTTPS) is a combination of the Hypertext Transfer Protocol with the SSL/TLS protocol to provide encryption and secure identification. Should be used to administer and maintain devices through WEB.
+	CAPWAP is a standards-based protocol commonly used for split-MAC architectures for controlling and provisioning of APs. Its original intent is based on creating a standardized, interoperable protocol to enable communication between an access controller (AC) and a collection of wireless termination points (WTPs). 
+	LWAP, a method to manage, control, and communicate with APs in split-MAC architecture, is associated with Cisco. 
+	One important feature offered with CAPWAP is the optional support of encryption. The LWAPP protocol does not offer encryption. CAPWAP incorporates datagram transport layer security (DTLS) as the security algorithm. 
+	The main purpose of wireless network management system is to provide a central point of management. A WNMS can have such capabilities like RF spectrum planning and management, WLAN architecture monitoring with alarm systems etc. 
+	RADIUS incorporates the use of attribute-value pairs (AVPs) that can return additional information in the authentication response to tell the authenticator of special treatment for the supplicant. 
+	In fact, more often than not the authentication server in your WLAN infrastructure APs or WLAN controller configurations do not usually hold the user account credentials for the WLAN supplicant. In the case of EAP-PEAP, EAP-FAST, LEAP, and some others, the actual user credential database is typically Windows Active Directory or an LDAP server. 
+	When a RADIUS server provides a successful response to an authentication, the ACCESS-ACCEPT response contains a series of attribute-value pairs (AVPs). RADIUS AVPs are analogous to the concept of variables used in mathematics or software programming. 
+	Vendor-specific attributes allows for configuration of these AVPs to be included in the RADIUS database that would then be included with successful authentications.
+	Users could be assigned to different VLANs based on the identity. The main benefit of this solution is that existing ACLs or firewall between VLANs can be extended to the WLAN clients. 
+	When selecting a RADIUS server, it is important first to consider your user database sources. There may be one or more user database, and should confirm support for the exact database technology. 
+	A RADIUS server can be a proxy to one or more centralized RADIUS servers. When a domain is used, we commonly refer to this as a realm-based authentication. 
+	RADIUS servers all have their own user databases as well as user grouping features commonly found in many user database systems. The reality is that most enterprises simply want the ability to authenticate against their existing user databases. Therefore, it is common to find that most enterprises do not use the built-in native user database functions within RADIUS servers. 
+WLAN infrastructure from some manufacturers can integrate directly to LDAP systems in lieu of sending each supplicant authentication request to a RADIUS server. LDAP databases can contain a wealth of information and can be configured with many attributes.
+	Active Directory is a hierarchical directory service that is based on LDAP. Active Directory provides a vast amount of capability for organizing and centralizing information and designing relationships for computers, users, printers, groups, security policies etc.
+	RADIUS allows integration with a variety of structured query language database technologies. The interface is usually via an open database connectivity (ODBC) or java database connectivity (JDBC).
+	EAP type should the strongest one, which is capable to handle by authenticator and authentication server.
+Deployment Architecture and Scaling
+	When deploying RADIUS servers, put careful though into the architectural deployment model. 
+	In case of single-site deployment only a single RADIUS server or cluster of redundant servers is needed. Single-Site deployments should be considered when:
+All WLAN users are located at a single site;
+A central authentication database handles all user authentication;
+One or more RADIUS server’s proxy to the on-site authentication database.
+	A distributed autonomous sites scenario can replicate the authentication database from a central site to each autonomous site. 
+	The main benefit is that all of the wireless users authenticate against the local replicated authentication database and do not have to authenticate across a WAN link.
+	A distributed site, centralized authentication, and security architecture is defined by:
+Multiple WLANs existing at different locations;
+The authentication database is located at a central site;
+One or more RADIUS servers are also located at the central site, and proxy to the central authentication database.
+	A distributed site and security, centralized authentication is defined by:
+Multiple WLANs existing at different locations;
+The authentication database is located at a central site;
+One or more RADIUS servers are located at the remote site and proxy the authentication request to the central authentication database. 
+	Many WLAN vendors are embedding mini-RADIUS servers into their WLAN products. This can be particularly useful in small sites or perhaps in a remote site RADIUS-failover scenario with simple requirements.
+	During configuring a WLAN infrastructure device, there are often at least three RADIUS servers that can be configured. Multiple RADISU servers are configured for redundancy. If primary server is unavailable, the second, third etc. will start to operate automatically. 
+	When two network applications communicate, in order to maintain the application state, programmers typically implement timer values to handle situations where one end of the link does not respond in a time fashion. Without timer values, applications might be stuck in a state waiting for a response from the third packet exchange. 
+	Enterprise-grade APs and WLAN controllers should have the ability to adjust the EAP timer values that affect all 802.1X/EAP authentications for these devices. 
+	The EAP Request timer specifies the time when the 802.1X state machine will abandon the current session when waiting for a response from the supplicant. This timer should be set to the highest value to accommodate the slowest client and not for the fastest, most capable client. Usually these timers are global values that operate for all SSIDs. 
+	During the 802.1X/EAP process, depending on the EAP type, the client identity is requested. The EAP Identity Request timer affects how long before the 802.1X/EAP session will expire once the maximum retry limit is exceeded. 
+	RADIUS timers affect the interaction between the authenticator and the RADIUS server, and affect all 802.1X/EAP transactions.
+	The RADIUS authentication retransmission timeout - this is the timer value that the authenticator will wait for the RADIUS server transaction. 
+	AP-based timer values affect the operation of wireless client connections to APs. 
+	A timer usually governs how long that client will continue to be allowed on the WLAN until it is forced to reauthenicate, and perhaps reassociate. 
+	RSN networks using strong EAP types typically will re-key at regular intervals or after a certain amount of traffic. 
+	Inactivity timer - when a client is associated with a WLAN and simply stops receiving or transmitting any wireless traffic, this is the timer that, once expired, will deauthenticated the client from the WLAN.
+	If you are running or designing an authentication server to be run out of a remote facility over a WAN, pay attention to the round-trip traffic transmission times. You also need to look at the peak response times and consider that these might result in authentication timer expiration. 
+	Multifactor authentication server issue - the main point you need to understand with multifactor authentication server is that they must be integrated with your authentication server and/or user database technology. Each vendor has a different architectural model and even has its own tools to manage the secondary factor credential system. You should contact the vendor prior implementing.
+Public Key Infrastructure
+Public key infrastructure - digital certificates are used along with asymmetric encryption algorithms. This is a concept of asymmetric encryption in that the key used to encrypt can only be decrypted with a different but related key.
+	The factors containing in public certificate include the following:
+Version number;
+Serial number of the certificate;
+Issuer algorithm information;
+Issuer of certificate;
+Valid to/from date;
+Subject’s public key;
+Public key algorithm information of the subject of the certificate;
+Digital signature of the issuing authority;
+X.509v3 optional extensions.
+	A self-signed certificate isn’t purchased from a commercial CA. The responsibility is placed on a user whether or not to trust the source. The problem is the operational headache involved with the distribution of each self-signed certificate you would like to trust.
+	In case of Enterprise PKI certificate authority (CA) can issue certificate which can be published within Active Directory. Easy to administer, distribute, revoke etc. You can also use your own CA to issue certificates to your RADIUS servers and successfully perform mutual authentication based on these certificates. 
+Role-Based Access Control
+	The 802.11-2007 standards only define operations at layer 1 and 2 of the OSI model. Role-based access control (RBAC) is an approach to restricting system access to authorized users. The three main components of an RBAC approach are users, roles, and permissions. When used in a WLAN environment, role-based access control can provide granular wireless user management.
+	Individual users or devices can be assigned to roles in a variety of methods including:
+Pre-Authentication Role Assignment – Users are assigned to a role prior to authentication;
+Port-Authentication Role Assignment – Users can be assigned to roles based on the user authentication method;
+Server-Based Role-Assignment – When a user authenticates using 802.1X/EAP. RADIUS attributes can be used to assign users into a specific role automatically. 
+Built-In/Integrated Firewalls
+	Network traffic in WLANs is also an important consideration when firewall designs are implemented. In split-MAC architecture, all network traffic traverses through the WLAN controller, usually located at the network core. In hybrid or split-MAC architectures using more advanced features, the data plane is split out at the AP, which is located at the network edge. Integrated firewalls need to inspect and block the traffic where the data plane splits off into the firewall.
+	WLAN vendors who have integrated firewalls can literally restrict each user down to incredibly granular levels. 
+	An access control list (ACL) is a more traditional traffic control mechanisms typically applied at a router interface between VLANs and more recently at a WLAN level. More advanced ACLs may also be helpful in the use of devices that may not be capable of 802.1X. For example, all VoWiFi phone might come from one MAC Organizationally Unique Identifier (OUI). 
+	Network access control (NAC) is a computer network security methodology that integrates endpoint security technology (such as antivirus and software patch versions) with user authentication. Typically designed to work with RADIUS servers. NAC servers are often being tied into an 802.1X framework design. 
+	From a WLAN perspective, NACs typically works is concert with an 802.1X authentication framework and learn about the user identity and network privileges while at the same time ensuring that users the right installed software or patches before network access is allowed. 
+ Encryption Gateway
+An enterprise encryption gateway (EEG) is an 802.11 middleware device that allows for segmentation and encryption. The main purpose of an EEG is to provide an overlay encryption solution for pre-existing WLAN infrastructure. 
+	Proprietary encryption technology using the AES algorithm at Layer 2 is provided by the enterprise encryption gateway. Standard WPA2-compliant WLAN devices use AES 128-bit dynamic encryption keys. EEG solutions can also provide 192-bit and 256-bit AES encryption
+	An EEG is basically an overlay encryption solution that sits on top of the existing WLAN infrastructure. 
+Summary 
+Before the wireless communication can be established, access points, WLAN controllers or autonomous access points should be in place. These devices ensure the proper functionality of distribution systems and integration services. Every device has a medium access control address which is unique, and used to find the appropriate equipment. 
+The wireless network could have various implementations, bus, star, mesh and hybrid. Depends on your needs, schemas could be taken as they are or modified for each particular event. 
+To have devices in place is one deal, but to ensure the proper functionality and management is a complex procedure. Device management include:
+Firmware revisions;
+Configurations and changes;
+Monitoring and Incident response;
+Managing and filtering of device alerts and alarms;
+Performance monitoring.
+Public key infrastructure is mainly used for authentication, encryption, to ensure privacy and etc.
+The main schema for access control must be role-based. This will ensure that each user is assigned to correct virtual local area network, with least privilege implementation in place. 
+Built-in or integrated firewalls add additional layer of security, by blocking the traffic. 
+	Enterprise encryption gateway, specific device that allows for segmentation and encryption. At enterprise level, wireless network should be isolated from wired network, to avoid point-to-point attack. As you know, nodes that are participating at basic service set are prone to point-to-point attack without traversing access point twice. 
+	 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4. RSNA Adjusted Hybrid Authentication Schema
+	During writing this topics, various authentication, authorization schemas been introduced. The most present secure authentication mechanism is shown on Figure 19.	
+The authentication schema could be modified in order to have much more security during the data, keys, EAPoL messages (frames) transmission. In order to ensure robust and stable authentication with further secure data transmission, the following should be in place:
+Client Station (STA) RSN capable – Take into account, RSN (Robust Security Network) are not supported almost by all legacy clients. Before making decision to buy a particular laptop, tower computer (with wireless NIC) etc. ensure that hardware is capable to support and handle RSN security requirements. RSN capable clients are quite expensive solution, but for most international, military, bank organizations security for Wi-Fi must stand as a prime goal, otherwise, personal or money leakage could destroy the customer trust and organization itself;
+Authenticator (Cisco, Juniper or other vendors that are capable to handle robust security) – Specific device which is playing a key role, basically an obstacle between STA and AS, and operating like “gateway” to ensuring the robust communication and data transfer. This particular devices extremely different based on prices. Vendors could have their own implementation of security inside the device, which also add security. Best practices, by having various high-security devices within a peripheral network, like DMZ (Demilitarized zone) add additional security, because breaking the Cisco or Juniper routers is much harder than general OS. Various hardening techniques exist to protect OS (Operating Systems), but hardware combination still adds complexity; 
+Authentication Server (AS) RSN capable – In most cases Enterprises are operating within Microsoft environment, thus, Microsoft Windows Server 2012 must be in place. In reality, any OS could be used as AS, as long the 802.1X/EAP steps are in place. As an example, Kerberos authentication, is an open standard, thus many vendors can take Kerberos authentication mechanism as basis. It will work if steps used within Kerberos environment are persist. Best practices, AS must be a stand-alone service. In this case, stand-alone means not being without a network, but implementing a specific function. This kind of situation will ensure that hardening process for server will be executed with more precision;
+Third party (RSA Token) – In order to strengthen authentication, at minimum two-factor authentication must be in place. Tokens are capable to provide stable security, even in case of identity theft, physical token theft or data (frames) are sniffed by various network monitoring tools. Based on the organization finance capabilities, one of the most secure systems that could be implemented for Tokens are the following:
+Token devices change numbers every 1 minute. Even if someone sees numbers, less than 1 minute a code will be valid;
+RSA Token works simultaneously with a user password (PIN) and token number. Basically, the combination of this two gives a valid password. Token nature is OTP (One-time Pad), even if password or token number were incorrectly set, you cannot reuse the token digits anymore. This eliminates the eavesdropping, network sniffers, MAN (Man-in-the-Middle) attacks and etc.;
+RSA Token could be connected to the telephone/mobile system. The message could be sent to the mobile phone indicated on the system after the correct PIN (Personal Identification Number) and token numbers input. This method is expensive, but gives robust security, by adding additional layers of protectionn.
+Microsoft Server 2012 NAP (Network Access Protection) – Network Access Protection gives a unique possibility to make clients consistent to network security environment. Microsoft done a great job by creating Windows Server 2012, it gives a market an incredible flexibility. If clients who will try to access the network through Wi-Fi, could also use Direct Access. Direct Access is a combination of different various components, like PKI, Web Server etc. to ensure that clients are always part of the network, as soon as, internet connection is in place. This is a separate solution, thus extremely important to have Check Point server is place. Check Point is capable to encrypt any hardware, like HDD (Hard Drive), USB (Universal Serial Bus) flash drives, CD/DVD discs etc. This aspect must be taken into account, because laptop could be stolen. Microsoft bit-locker with TPM (Trusted Platform Module) could be used. The solution depends on security administrators;
+RADIUS or DIAMETER Server – Servers are capable to provide AAA (Authentication, Authorization, and Accounting) mechanisms, to ensure correct security requirements fulfilment, based on various circumstances. Different countries could have separate requirements. DIAMETER uses TCP (Transport Control Protocol), which ensure that communication is constantly checked, packets can be resent, etc. RADIUS uses UDP (User Datagram Protocol) which could give additional risks. Hold in mid, TCP stands for connection-oriented communication, UDP stands for connectionless communication. Payload in case of TCP is 20 bytes, and in case of UDP 8 bytes;
+Microsoft WSUS (built-in or through SCCM (System Centre Configuration Manager) 2012 or Third Party solutions (like Altiris from Symantec Corporation) – In order to ensure all clients are up-to-date with latest security patches and updates, both for operating systems, antivirus, anti-malware and critical updates. This would increase the security awareness of particular clients, malicious codes (signatures) could be detected on early stages, and various viruses, Trojan horses, and etc. must be blocked in advance. SCCM could be integrated into Microsoft environment, and give additional control for various network devices. It even capable to install antivirus on the spot;
+Wireless Intrusion Prevention (WIPS) & Wireless Intrusion Detection Systems – The combination of aforementioned give a stable possibility that malicious actions would be logged (based on configuration) or automatically blocked, unplugged, disabled. Depends on the necessary level of security awareness enterprise administrators, security officers would establish the percentage of False-Positive and False-Negative that could exist within a network. To that end, WIPS must be configured with extreme caution, because it’s capable to automatically block clients, thus possible additional workload for administrators would be in place;
+Public Key Infrastructure (PKI) – The third-party certificate authority (CA) play a key role to identify parties involved, during authentication and data transmission. PKI also must be used to establish a secure tunnel between entities, even before any data, whether it’s EAP (Extensible Authentication Protocol) request to be authenticated, or just data transfer through insecure environment. In case of third-party PKI, each client should have a separate certificate issued by CA. The solution is cost-intensive, thus discrete decision have to be executed.
+In case if all aforementioned would be in place, the authentication, authorization, and accounting mechanisms, my suggestion would look as the following. 
+Before the STA would even send any requests to be authenticated within a network, it should ensure that AS server could be trusted. Best practices for Enterprise organizations are to use third-party certificate authority vendors, in our case VeriSign, who is authorizing the identity for both STA and AS. In order to make this schema to work, STA & AS should trust the root certificate for VeriSign. The key role is playing the authenticator device, because STA make a first connection to particular authenticator. Authenticator have a direct connection to AS. Best practice is to have a wired isolated connection between authenticator and AS, meaning, no human being outside the network, except network administrators should be authorize even to see the cable structure. Microsoft Windows Server 2012 is capable to authorize authenticator devices on the network, by issuing a particular certificate through Network Device Enrolment Service. This service is part of the PKI on the Server itself. Such solution bring another layer of security, but main idea it’s free approach to identify peripheral devices.
+As soon as, prior identity check is passed, the secure tunnel should be established before a first EAPoL (Extensible Authentication Protocol over Local Area Network) authentication request could be sent. To accomplish such task, a bogus username (or anonymous username) is transferred between STA and AS. This action make simultaneous transfer of a computer certificate from AS to STA, thus a TLS (Transport Layer Security) communication would be established, meaning, stable, encrypted tunnel come into play. AS is also notified, that STA is requesting an access to the network. This tunnel in reality is valid several ms, just to make an instant transfer of an identity request. During this phrase, the AS and STA certificates are transferred.
+Next phrase is extremely important, because mutual certificate validity check is in place. This step not just ensure the authenticity, but also encrypted channel is established between AS and STA for further authorization, based on authentication requirements. This phase must be divided into several parts:
+As soon as secure tunnel is established, STA will request an access to the network and AS will response with the security requirements. 802.1X/EAP authentication schema simultaneously with RADIUS (Remote Access Dial-In User Server), NAP (Network Access Protection), and WSUS (Windows System Update Server) must be in place:
+802.1X/EAP will ensure that controlled and uncontrolled virtual ports are created. Uncontrolled virtual port is established to allow authentication request (frames) to be transmitted over the network. This port is based on isolated environment, when STA could communicate just with AS (RADIUS), by providing necessary information for authentication. The TCP/IP (Transport Control Protocol/Internet Protocol) configuration would look as follows: IP (Internet Protocol) address issued by DHCP (Dynamic Host Configuration Protocol) with subnet mask 255.255.255.255. IP address range must be part of the same subnet with AS, thus eliminating the various frame relays (or additional peripheral devices), that based on best practices should not be part of the communication channel. This step ensures that direct communication between the client (requesting access) and AS (authorizing access) are protected and isolated. The NAP enforcement status would be Restricted before all requirements are met. Restricted status means client cannot be authorized, thus no access is prescribed, no Kerberos ticket is issued, basically, access to the network is denied.
+NAP will ensure that health certificates indicating SoH (Status of Health) is issued to each client, attempting to authenticate. The antivirus, anti-malware, windows-updates, and firewall settings are configured through NAP console. By using Windows Server 2012 NAP Server, you have a possibility to create various requirements for SoH, which was not possible in Windows Server 2008. You should take into account; NAP consists of RADIUS client, connection request policies, network policies, health policies. In order to alleviate the configuration and maintenance, RADIUS server is built into NAP console.  The only configuration you need to implement, indicate IP address of the RADIUS server, best practices, it should be set separately from NAP server. As I already mentioned, RADIUS ensure authorization, authentication, accounting schemas. The key step is network request policies, basically, what conditions should be met in order to gain access to the network. NAP offers tremendous amount of different settings, the combination of which could ensure robust and stable secure network environment. Network policies enhance security with combination of policies, like client health policies, OS requirements, tunnel types during connection or even a combination of various settings to strengthen network access requirements. Health policies are an indication of validity check. Quite many settings exist for health checking, like presence of antivirus, antimalware and firewall status, as well as, specific settings for Windows 7/8 and etc. This step combines various services, but can provide extreme security before the transient and group keys used for data (frames) encryption are created.
+WSUS gives a possibility to update clients who requested an access to the network. WSUS is capable not just apply windows updates, but various applications, software could also be corrected. Best practices, each critical or security updates should be applied as soon as possible, but all updates must be checked in advance through piloting mechanisms. Pilots are test client computers, which give a feedback concerning operation status. In case if some functionality is lost, effort to remediate such situation must be discretely resolved or even updates could be revoked. 
+After all preliminary steps are successfully checked, maintained and resolved, NAP/RADIUS server will give a response, whether authentication was accepted or rejected. In case of rejected situation, client is located within an isolated environment, thus cannot make any type of attack, because no gateway is assigned. Uncontrolled port also gets blocked, thus a communication between AS and STA is not possible anymore and any transmission of frames are stopped, as well as, session closed.
+The last step of 802.1 X/EAP authentications is a 4-way handshake. As soon as, RADIUS/NAP server gives a positive response, separate keys to encrypt data frames between STA and AS must be created. MSK (Master Session Keys) are created during the 802.1X/EAP process, which play a role of seeding materials for creation of PMK (Pairwise Master Key) and GMP (Group Master Key). GTK (Group Temporal Key) and PTK (Pairwise Temporal Key) are created for each client separately. GTK and PTK are born based on PMK and GMP thus is totally independent from each other. In case if an intruder will gain one of the keys, just particular client is compromised without jeopardizing the whole network. PMK is used to encrypt a data frames across the network for each client separately. GTK Is used to encrypt broadcast and multicast traffic. 
+Finally, authentication, authorization and accounting are successfully accomplished. By encrypting the data frames, a last tunnel is established between the STA and AS. STA is authenticated and authorized, meaning NAP enforcement is unrestricted and all policies successfully executed, environment is secured, RSN is established. 802.1X/EAP controlled ports allow the protected data be transferred. 
+This combination of peripheral devices, encryption standards, authentication procedures and monitoring solutions will ensure extreme security for your network. 
+After clients become part of the network, WIPS and WIDS should constantly monitor, and log activity. Even if clients are authorized to do some specific tasks within a network, it doesn’t mean they will not try to harm or compromise other part of their boundaries.
+
+
+
+
+
+
+
+Conclusions
+We have looked at different Wi-Fi security aspects like authentication, authorization, monitoring, and various peripheral devices that plays important role establishing secure environment. Wireless communication, data transmission is fully opened for attackers which could be located far away by using big antennas, thus strong encryption, privacy ensuring, integrity check must persist constantly. 
+Different 802.11 security standards are consistently developing by introducing new features, schemas, possible additional hardware which adds security to wireless communication. Taking into account aforementioned I suggest the following strategy for establishing wireless secure environment:
+Before making a purchase of hardware or deciding which software should be used, prior assessment should be done, in order to avoid misconfiguration and additional money wasting;
+In perfect world the strongest authentication like 802.1X with AES should be used, 4-way handshake with CCMP/AES, other authentication mechanism based on EAP with tunnelling or certificate based, in other word RSNA-capable devices must be used;
+In situations, where “legacy” devices could not be exchanged pre-RSNA authentication methods with appropriate encryption could be used, but with present processing power, you should purchase RSNA-capable devices;
+The 802.11-2012 security standard will consume all previously developed security solutions, including roaming, high-throughput, customization, data transmission speed, which is perfect situation could exceed 7 Gbit/s, almost instant data transmission;
+Software- or hardware based monitoring solution, different WIDS/WIPS should constantly monitor your environment, by using different switches, methods, techniques you could even protect your network against zero-day attack, based on network behavioural solution;
+Even if you invest millions into security, the weakest link in any case will be human. In order to strengthen network security, all users without exceptions should be well-trained, policies should be signed, questions answered.
+
+
+References
+Whitepaper, AirMagnet, August 05, 2008, 802.11n Primer, 15p;
+Comparison of the IEEE 802.11, 802.15.1, 802.15.4 and 802.15.6 wireless standards Jan Magne Tjensvold, September 18, 2007, 7.p;
+IEEE 802.11b Wireless LANs, 3COM, Wireless Freedom of Ethernet Speeds, 14.p;
+IEEE 802.11g, The New Mainstream Wireless LAN Standard, White paper, February 2003, 12.p;
+IEEE 802.11a-1999 (Supplement to IEEE Std. 802.11-1999), Wireless LAN MAC and PHY specifications, High-speed Physical Layer in the 5 GHz Band 90.p;
+CISSP ® All-in-One Exam Guide, Fifth Edition, Shon Harris, January 15, 2010, 1215.p;
+CISSP, Certified Information Systems Security Professional, Study Guide, James M. Stewart, Ed Tittel, Mike Chappel, 2004, 820.p;
+Coleman D., Westcott A., Harkins B., Jackman S. – CWSP Certified Wireless Security Professional Official Study Guide – 2010, 693.p;
+CompTIA Network+ Certification Study Guide, Fourth Edition, 767.p;
+CompTIA, CompTIA Network+ (2009 Edition), 732.p;
+CompTIA Security+ Deluxe, Study Guide, Emmett Dulaney, Sybex, 2009, 679.p;
+NIST, Wireless Network Security 802.11, Bluetooth and Handheld Devices, Tom Karygiannis, Les Owens, Special Publication 800-48, 119.p;
+Cryptography and Network Security Principles and Practices, 4th Ed - William Stallings, 744.p;
+IEEE Std 802.11i-2004, 947.p; 
+IEEE Std 802.11-2007, 1076.p;
+IEEE Std 802.11™-2012, 2793.p;
+IEEE Std. 802.11w™-2009, 111.p;
+IEEE Std 802.11k™-2008, 244.p;
+IEEE Std 802.1X™- 2004, 169.p;
+NIST, Establishing Wireless Robust Security Networks, a Guide to IEEE 802.11i, 162p;
+Complete Guide to CISM Certification, Thomas R. Peltier, Justin Petier, December 2006, 476p;
+LearnKey CISSP - Business Continuity and Disaster Recovery Planning;
+Secure Handover in  WLANs: CAPWAP, HOKEY, and IEEE 802.11r T. Charles Clancy, 8p;
+802.1x White Paper, Allied Telesis, 14.p;
+Extensible Authentication Protocol (EAP) and IEEE 802.1x: Tutorial and Empirical Experience, 32.p;
+CompTIA Network+ Certification Study Guide, LearnKey, 2009, 801.p;
+Hansche S. Official (ISC) 2 Guide to the CISSP-ISSEP CBK, 2005, 993.p; 
+Cisco Systems, White Paper, EAP/TLS Deployment Guide to Wireless LAN Networks, 42.p;
+International Journal of Principles and Applications of Information Science and Technology July 2008, Vol.2, No.1;
+Wireless LAN Security and IEEE 802.11i, Jyh-Cheng, Ming-Chia Jiang, and Yi-Wen Liu, National Tsing Hua University, Migration towards 4G Wireless Communication, 10.p;
+Analysis of the 802.11i 4-Way Handshake, Electrical Engineering and Computer Science Departments, Stanford University, Stanford, CA 94305, 8.p;
+http://en.wikipedia.org;
+http://standards.ieee.org (Various IEEE standards and it’s amendments, whether wireless or wired);
+http://www.iso.org/iso/home.html (International Organization for Standardization website. Different IT standards across the world);
+http://www.ietf.org (The Internet Engineering Task Force website. IETF produce technical documentation influencing the design, use and etc. to the Internet environment);
+http://www.wi-fi.org (Wi-Fi Alliance certify various innovative solutions to the market);
+http://www.ieeeghn.org (Different information regarding history of the wireless and wired networks);
+http://www.tech-faq.com (Technological Frequently Asked Questions website, helps to find various answers to IT questions);
+http://msdn.microsoft.com (Microsoft website help to find in-depth information regarding solutions offered by Microsoft);
+http://www.defense.gov (Website give information regarding U.S. Department of Defence);
+http://www.nist.gov (National Institute of Standards and Technology. Information touches various aspects from different fields, like, chemistry, maths, energy, information technology etc.);
+http://www.soxlaw.com (The Sarbanes-Oxley Act, various legislation sections to which organization of different types must comply);http://www.hhs.gov 
+http://revolutionwifi.blogspot.nl (Blog regarding wireless solutions and amendments).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Valsts pārbaudījuma komisijas lēmums:
+
+Piešķirt studentam profesionālā maģistra grādu 
+/norādīt ar +/
+
+
+un
+
+
+profesionālo kvalifikāciju. 
+
+Datums: ______________ 20____
+
+Protokols Nr. _______________
+
+Vērtējums: _________________
+
+
+Komisijas sekretāra paraksts: ________________________________
+
+
+
