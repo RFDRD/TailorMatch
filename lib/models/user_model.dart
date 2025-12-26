@@ -16,6 +16,7 @@ class UserModel {
   final UserRole role;
   final String? avatar;
   final String? address;
+  final String? bio;
   final int? experienceYears;
   final double rating;
   final int ratingCount;
@@ -29,6 +30,7 @@ class UserModel {
     required this.role,
     this.avatar,
     this.address,
+    this.bio,
     this.experienceYears,
     this.rating = 0.0,
     this.ratingCount = 0,
@@ -46,6 +48,7 @@ class UserModel {
       role: data['role'] == 'tailor' ? UserRole.tailor : UserRole.client,
       avatar: data['avatar'],
       address: data['address'],
+      bio: data['bio'],
       experienceYears: data['experienceYears'],
       rating: (data['rating'] ?? 0.0).toDouble(),
       ratingCount: data['ratingCount'] ?? 0,
@@ -62,6 +65,7 @@ class UserModel {
       'role': role == UserRole.tailor ? 'tailor' : 'client',
       'avatar': avatar,
       'address': address,
+      'bio': bio,
       'experienceYears': experienceYears,
       'rating': rating,
       'ratingCount': ratingCount,
@@ -75,6 +79,7 @@ class UserModel {
     String? phone,
     String? avatar,
     String? address,
+    String? bio,
     int? experienceYears,
     double? rating,
     int? ratingCount,
@@ -87,6 +92,7 @@ class UserModel {
       role: role,
       avatar: avatar ?? this.avatar,
       address: address ?? this.address,
+      bio: bio ?? this.bio,
       experienceYears: experienceYears ?? this.experienceYears,
       rating: rating ?? this.rating,
       ratingCount: ratingCount ?? this.ratingCount,

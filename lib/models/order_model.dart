@@ -56,6 +56,8 @@ class OrderModel {
   final String tailorId;
   final String serviceId;
   final String serviceName;
+  final String? clientName;  // Mijoz ismi
+  final String? tailorName;  // Chevar ismi
   final OrderStatus status;
   final OrderDates dates;
   final String? notes;
@@ -68,6 +70,8 @@ class OrderModel {
     required this.tailorId,
     required this.serviceId,
     required this.serviceName,
+    this.clientName,
+    this.tailorName,
     required this.status,
     required this.dates,
     this.notes,
@@ -84,6 +88,8 @@ class OrderModel {
       tailorId: data['tailorId'] ?? '',
       serviceId: data['serviceId'] ?? '',
       serviceName: data['serviceName'] ?? '',
+      clientName: data['clientName'],
+      tailorName: data['tailorName'],
       status: _parseStatus(data['status']),
       dates: OrderDates.fromMap(data['dates']),
       notes: data['notes'],
@@ -126,6 +132,8 @@ class OrderModel {
       'tailorId': tailorId,
       'serviceId': serviceId,
       'serviceName': serviceName,
+      'clientName': clientName,
+      'tailorName': tailorName,
       'status': _statusToString(status),
       'dates': dates.toMap(),
       'notes': notes,

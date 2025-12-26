@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 import '../../models/user_model.dart';
 import '../../models/order_model.dart';
 import '../../models/service_model.dart';
@@ -36,13 +37,38 @@ class _TailorHomeScreenState extends State<TailorHomeScreen> {
   final _authService = AuthService();
   final _userService = UserService();
   final _orderService = OrderService();
+  final _chatService = ChatService();
 
   UserModel? _user;
+  int _unreadMessageCount = 0;
+  StreamSubscription? _chatSubscription;
 
   @override
   void initState() {
     super.initState();
     _loadUser();
+    _listenToUnreadMessages();
+  }
+
+  @override
+  void dispose() {
+    _chatSubscription?.cancel();
+    super.dispose();
+  }
+
+  void _listenToUnreadMessages() {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null) return;
+    
+    _chatSubscription = _chatService.getUserChats(userId).listen((chats) {
+      int totalUnread = 0;
+      for (final chat in chats) {
+        totalUnread += chat.getUnreadCount(userId);
+      }
+      if (mounted) {
+        setState(() => _unreadMessageCount = totalUnread);
+      }
+    });
   }
 
   Future<void> _loadUser() async {
@@ -84,8 +110,18 @@ class _TailorHomeScreenState extends State<TailorHomeScreen> {
                 label: l.tr('services'),
               ),
               BottomNavigationBarItem(
-                icon: const Icon(Icons.chat_outlined),
-                activeIcon: const Icon(Icons.chat),
+                icon: _unreadMessageCount > 0
+                    ? Badge(
+                        label: Text(_unreadMessageCount.toString()),
+                        child: const Icon(Icons.chat_outlined),
+                      )
+                    : const Icon(Icons.chat_outlined),
+                activeIcon: _unreadMessageCount > 0
+                    ? Badge(
+                        label: Text(_unreadMessageCount.toString()),
+                        child: const Icon(Icons.chat),
+                      )
+                    : const Icon(Icons.chat),
                 label: l.tr('messages'),
               ),
               BottomNavigationBarItem(
@@ -158,8 +194,41 @@ class _TailorDashboardState extends State<_TailorDashboard> with SingleTickerPro
       body: StreamBuilder<List<OrderModel>>(
         stream: widget.orderService.getTailorOrders(tailorId),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          // Faqat birinchi ulanishda loading ko'rsatish
+          if (!snapshot.hasData && !snapshot.hasError && snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator(color: primaryColor));
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, size: 60, color: Colors.red[300]),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Xatolik yuz berdi',
+                    style: GoogleFonts.lato(fontSize: 18, color: Colors.grey[700]),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Text(
+                      '${snapshot.error}',
+                      style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: () => setState(() {}),
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Qayta urinish'),
+                    style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                  ),
+                ],
+              ),
+            );
           }
 
           final allOrders = snapshot.data ?? [];
@@ -261,6 +330,40 @@ class _OrderCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
+            // Mijoz ma'lumotlari
+            InkWell(
+              onTap: () => _showClientProfile(context),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: primaryColor.withValues(alpha: 0.1),
+                    child: Text(
+                      (order.clientName ?? 'M').substring(0, 1).toUpperCase(),
+                      style: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          order.clientName ?? 'Mijoz',
+                          style: GoogleFonts.lato(fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          'Mijoz profilini ko\'rish',
+                          style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Icon(Icons.chevron_right, color: primaryColor),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
             if (order.dates.meeting != null)
               _InfoRow(icon: Icons.event, label: 'Uchrashuv', value: _formatDate(order.dates.meeting!)),
             if (order.dates.fitting != null)
@@ -271,6 +374,123 @@ class _OrderCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showClientProfile(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => FutureBuilder<DocumentSnapshot>(
+        future: FirebaseFirestore.instance.collection('users').doc(order.clientId).get(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const SizedBox(
+              height: 200,
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
+          
+          final data = snapshot.data!.data() as Map<String, dynamic>?;
+          if (data == null) {
+            return const SizedBox(
+              height: 200,
+              child: Center(child: Text('Mijoz topilmadi')),
+            );
+          }
+          
+          return Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundColor: primaryColor,
+                  child: Text(
+                    (data['name'] ?? 'M').substring(0, 1).toUpperCase(),
+                    style: const TextStyle(fontSize: 32, color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  data['name'] ?? 'Mijoz',
+                  style: GoogleFonts.lato(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                if (data['phone'] != null)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.phone, size: 16, color: Colors.grey),
+                      const SizedBox(width: 4),
+                      Text(data['phone'], style: TextStyle(color: Colors.grey[600])),
+                    ],
+                  ),
+                if (data['address'] != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.location_on, size: 16, color: Colors.grey),
+                        const SizedBox(width: 4),
+                        Text(data['address'], style: TextStyle(color: Colors.grey[600])),
+                      ],
+                    ),
+                  ),
+                const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // Chat ochish
+                    _openChat(context, data);
+                  },
+                  icon: const Icon(Icons.chat),
+                  label: const Text('Xabar yuborish'),
+                  style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _openChat(BuildContext context, Map<String, dynamic> clientData) async {
+    final tailorId = FirebaseAuth.instance.currentUser?.uid;
+    if (tailorId == null) return;
+    
+    final chatService = ChatService();
+    try {
+      final chat = await chatService.getOrCreateChat(
+        clientId: order.clientId,
+        tailorId: tailorId,
+        clientName: clientData['name'] ?? 'Mijoz',
+        tailorName: 'Chevar', // TODO: get tailor name
+      );
+      
+      if (context.mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatScreen(
+              chatId: chat.id,
+              otherUserName: clientData['name'] ?? 'Mijoz',
+              otherUserId: order.clientId,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Xatolik: $e')),
+        );
+      }
+    }
   }
 
   Widget _buildActions(BuildContext context) {
@@ -396,8 +616,22 @@ class _ServicesPageState extends State<_ServicesPage> {
       body: StreamBuilder<List<ServiceModel>>(
         stream: widget.userService.getTailorServices(tailorId),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          // Faqat birinchi ulanishda loading ko'rsatish
+          if (!snapshot.hasData && !snapshot.hasError && snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator(color: primaryColor));
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, size: 60, color: Colors.red[300]),
+                  const SizedBox(height: 16),
+                  Text('Xatolik: ${snapshot.error}', style: const TextStyle(color: Colors.grey)),
+                ],
+              ),
+            );
           }
 
           final services = snapshot.data ?? [];
@@ -451,78 +685,173 @@ class _ServicesPageState extends State<_ServicesPage> {
     final minPriceController = TextEditingController();
     final maxPriceController = TextEditingController();
     final timeController = TextEditingController();
+    bool isLoading = false;
+
+    // Narxni formatlash (100000 -> 100 000)
+    String formatPrice(String digits) {
+      if (digits.isEmpty) return '';
+      final buffer = StringBuffer();
+      for (int i = 0; i < digits.length; i++) {
+        if (i > 0 && (digits.length - i) % 3 == 0) {
+          buffer.write(' ');
+        }
+        buffer.write(digits[i]);
+      }
+      return buffer.toString();
+    }
+
+    // Formatlangan narxdan raqam olish
+    double parsePrice(String text) {
+      return double.tryParse(text.replaceAll(' ', '')) ?? 0;
+    }
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Xizmat qo\'shish'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: typeController,
-                decoration: const InputDecoration(labelText: 'Xizmat turi (Ko\'ylak, Shim...)'),
-              ),
-              TextField(
-                controller: minPriceController,
-                decoration: const InputDecoration(labelText: 'Minimal narx'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: maxPriceController,
-                decoration: const InputDecoration(labelText: 'Maksimal narx'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: timeController,
-                decoration: const InputDecoration(labelText: 'O\'rtacha vaqt (5 kun)'),
-              ),
-            ],
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: const Text('Xizmat qo\'shish'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: typeController,
+                  decoration: const InputDecoration(
+                    labelText: 'Xizmat turi',
+                    hintText: 'Ko\'ylak, Shim, Kostyum...',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: minPriceController,
+                  decoration: const InputDecoration(
+                    labelText: 'Minimal narx (so\'m)',
+                    hintText: '100 000',
+                    border: OutlineInputBorder(),
+                    prefixText: '',
+                    suffixText: 'so\'m',
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    // Faqat raqamlarni saqlash
+                    final digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), '');
+                    if (digitsOnly.isNotEmpty) {
+                      final formatted = formatPrice(digitsOnly);
+                      if (formatted != value) {
+                        minPriceController.value = TextEditingValue(
+                          text: formatted,
+                          selection: TextSelection.collapsed(offset: formatted.length),
+                        );
+                      }
+                    }
+                  },
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: maxPriceController,
+                  decoration: const InputDecoration(
+                    labelText: 'Maksimal narx (so\'m)',
+                    hintText: '500 000',
+                    border: OutlineInputBorder(),
+                    suffixText: 'so\'m',
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    // Faqat raqamlarni saqlash
+                    final digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), '');
+                    if (digitsOnly.isNotEmpty) {
+                      final formatted = formatPrice(digitsOnly);
+                      if (formatted != value) {
+                        maxPriceController.value = TextEditingValue(
+                          text: formatted,
+                          selection: TextSelection.collapsed(offset: formatted.length),
+                        );
+                      }
+                    }
+                  },
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: timeController,
+                  decoration: const InputDecoration(
+                    labelText: 'O\'rtacha muddat',
+                    hintText: '5 kun',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ],
+            ),
           ),
+          actions: [
+            TextButton(
+              onPressed: isLoading ? null : () => Navigator.pop(context),
+              child: const Text('Bekor'),
+            ),
+            ElevatedButton(
+              onPressed: isLoading ? null : () async {
+                if (typeController.text.trim().isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Xizmat turini kiriting'),
+                      backgroundColor: Colors.orange,
+                    ),
+                  );
+                  return;
+                }
+                
+                setDialogState(() => isLoading = true);
+                
+                try {
+                  // To'g'ridan-to'g'ri Firestore ga yozish
+                  await FirebaseFirestore.instance.collection('services').add({
+                    'tailorId': tailorId,
+                    'type': typeController.text.trim(),
+                    'minPrice': parsePrice(minPriceController.text),
+                    'maxPrice': parsePrice(maxPriceController.text),
+                    'avgTime': timeController.text.trim().isEmpty 
+                        ? '5 kun' 
+                        : timeController.text.trim(),
+                    'isActive': true,
+                    'createdAt': FieldValue.serverTimestamp(),
+                  });
+                  
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Xizmat muvaffaqiyatli qo\'shildi!'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  setDialogState(() => isLoading = false);
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Xatolik: ${e.toString().split(']').last}'),
+                        backgroundColor: Colors.red,
+                        duration: const Duration(seconds: 5),
+                      ),
+                    );
+                  }
+                }
+              },
+              style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
+              child: isLoading 
+                  ? const SizedBox(
+                      width: 20, 
+                      height: 20, 
+                      child: CircularProgressIndicator(
+                        color: Colors.white, 
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : const Text('Qo\'shish'),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Bekor'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              if (typeController.text.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Xizmat turini kiriting')),
-                );
-                return;
-              }
-              try {
-                final service = ServiceModel(
-                  id: '',
-                  tailorId: tailorId,
-                  type: typeController.text,
-                  minPrice: double.tryParse(minPriceController.text) ?? 0,
-                  maxPrice: double.tryParse(maxPriceController.text) ?? 0,
-                  avgTime: timeController.text,
-                  createdAt: DateTime.now(),
-                );
-                await widget.userService.addService(service);
-                if (context.mounted) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Xizmat qo\'shildi!')),
-                  );
-                }
-              } catch (e) {
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Xatolik: $e')),
-                  );
-                }
-              }
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-            child: const Text('Qo\'shish'),
-          ),
-        ],
       ),
     );
   }
@@ -1175,6 +1504,11 @@ class _TailorProfilePage extends StatelessWidget {
 
   void _showEditProfileDialog(BuildContext context) {
     final nameController = TextEditingController(text: user?.name ?? '');
+    final phoneController = TextEditingController(text: user?.phone ?? '');
+    final experienceController = TextEditingController(
+      text: user?.experienceYears?.toString() ?? ''
+    );
+    final bioController = TextEditingController(text: user?.bio ?? '');
     String? selectedRegion = user?.address;
     
     final regions = [
@@ -1208,7 +1542,19 @@ class _TailorProfilePage extends StatelessWidget {
                   decoration: const InputDecoration(
                     labelText: 'Ism',
                     prefixIcon: Icon(Icons.person),
+                    border: OutlineInputBorder(),
                   ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: phoneController,
+                  decoration: const InputDecoration(
+                    labelText: 'Telefon',
+                    prefixIcon: Icon(Icons.phone),
+                    hintText: '+998 90 123 45 67',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.phone,
                 ),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
@@ -1216,9 +1562,32 @@ class _TailorProfilePage extends StatelessWidget {
                   decoration: const InputDecoration(
                     labelText: 'Viloyat',
                     prefixIcon: Icon(Icons.location_on),
+                    border: OutlineInputBorder(),
                   ),
                   items: regions.map((r) => DropdownMenuItem(value: r, child: Text(r))).toList(),
                   onChanged: (value) => setDialogState(() => selectedRegion = value),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: experienceController,
+                  decoration: const InputDecoration(
+                    labelText: 'Tajriba (yil)',
+                    prefixIcon: Icon(Icons.work),
+                    hintText: '5',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: bioController,
+                  decoration: const InputDecoration(
+                    labelText: 'O\'zingiz haqingizda',
+                    prefixIcon: Icon(Icons.info),
+                    hintText: 'Qisqacha ma\'lumot...',
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLines: 3,
                 ),
               ],
             ),
@@ -1231,23 +1600,39 @@ class _TailorProfilePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 try {
+                  final updates = <String, dynamic>{
+                    'name': nameController.text,
+                    'phone': phoneController.text,
+                    'address': selectedRegion,
+                  };
+                  
+                  if (experienceController.text.isNotEmpty) {
+                    updates['experienceYears'] = int.tryParse(experienceController.text) ?? 0;
+                  }
+                  if (bioController.text.isNotEmpty) {
+                    updates['bio'] = bioController.text;
+                  }
+                  
                   await FirebaseFirestore.instance
                       .collection('users')
                       .doc(user?.id)
-                      .update({
-                    'name': nameController.text,
-                    'address': selectedRegion,
-                  });
+                      .update(updates);
                   if (context.mounted) {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Profil yangilandi!')),
+                      const SnackBar(
+                        content: Text('Profil yangilandi!'),
+                        backgroundColor: Colors.green,
+                      ),
                     );
                   }
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Xatolik: $e')),
+                      SnackBar(
+                        content: Text('Xatolik: $e'),
+                        backgroundColor: Colors.red,
+                      ),
                     );
                   }
                 }
@@ -1328,11 +1713,20 @@ class _TailorChatsPage extends StatelessWidget {
         title: Text('Xabarlar', style: GoogleFonts.lato(fontWeight: FontWeight.bold)),
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              // TODO: Qidiruv
+            },
+          ),
+        ],
       ),
       body: StreamBuilder<List<ChatModel>>(
         stream: _chatService.getUserChats(currentUserId),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          // Faqat birinchi ulanishda loading ko'rsatish
+          if (!snapshot.hasData && !snapshot.hasError && snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator(color: primaryColor));
           }
 
@@ -1343,7 +1737,25 @@ class _TailorChatsPage extends StatelessWidget {
                 children: [
                   Icon(Icons.error_outline, size: 60, color: Colors.red[300]),
                   const SizedBox(height: 16),
-                  Text('Xatolik: ${snapshot.error}', style: const TextStyle(color: Colors.grey)),
+                  Text(
+                    'Xatolik yuz berdi',
+                    style: GoogleFonts.lato(fontSize: 18, color: Colors.grey[700]),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${snapshot.error}',
+                    style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      (context as Element).markNeedsBuild();
+                    },
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Qayta urinish'),
+                    style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                  ),
                 ],
               ),
             );
@@ -1356,11 +1768,18 @@ class _TailorChatsPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.chat_bubble_outline, size: 80, color: Colors.grey[300]),
-                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: primaryColor.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.chat_bubble_outline, size: 60, color: primaryColor),
+                  ),
+                  const SizedBox(height: 24),
                   Text(
                     'Hali xabarlar yo\'q',
-                    style: GoogleFonts.lato(fontSize: 18, color: Colors.grey),
+                    style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -1372,33 +1791,117 @@ class _TailorChatsPage extends StatelessWidget {
             );
           }
 
-          return ListView.builder(
+          return ListView.separated(
             itemCount: chats.length,
+            separatorBuilder: (context, index) => Divider(
+              height: 1,
+              indent: 76,
+              color: Colors.grey[200],
+            ),
             itemBuilder: (context, index) {
               final chat = chats[index];
-              final otherName = chat.clientName;
               final otherUserId = chat.clientId;
+              final unreadCount = chat.getUnreadCount(currentUserId);
+              final hasUnread = unreadCount > 0;
+
+              // Firebase'dan to'g'ri ismni yuklash
+              return FutureBuilder<DocumentSnapshot>(
+                future: FirebaseFirestore.instance.collection('users').doc(otherUserId).get(),
+                builder: (context, userSnapshot) {
+                  // Firebase'dan olingan yoki chat da saqlangan ism
+                  String otherName = chat.clientName;
+                  if (userSnapshot.hasData && userSnapshot.data!.exists) {
+                    final userData = userSnapshot.data!.data() as Map<String, dynamic>?;
+                    if (userData != null && userData['name'] != null) {
+                      otherName = userData['name'];
+                    }
+                  }
 
               return ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: primaryColor,
-                  child: Text(
-                    otherName.isNotEmpty ? otherName[0].toUpperCase() : 'M',
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                leading: Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 28,
+                      backgroundColor: primaryColor,
+                      child: Text(
+                        otherName.isNotEmpty ? otherName[0].toUpperCase() : 'M',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        width: 14,
+                        height: 14,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                title: Text(otherName, style: const TextStyle(fontWeight: FontWeight.w600)),
-                subtitle: Text(
-                  chat.lastMessage ?? 'Yangi suhbat',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                trailing: chat.lastMessageAt != null
-                    ? Text(
+                title: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        otherName,
+                        style: TextStyle(
+                          fontWeight: hasUnread ? FontWeight.bold : FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    if (chat.lastMessageAt != null)
+                      Text(
                         _formatDate(chat.lastMessageAt!),
-                        style: TextStyle(color: Colors.grey[500], fontSize: 12),
-                      )
-                    : null,
+                        style: TextStyle(
+                          color: hasUnread ? primaryColor : Colors.grey[500],
+                          fontSize: 12,
+                          fontWeight: hasUnread ? FontWeight.bold : FontWeight.normal,
+                        ),
+                      ),
+                  ],
+                ),
+                subtitle: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        chat.lastMessage ?? 'Yangi suhbat',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: hasUnread ? Colors.black87 : Colors.grey[600],
+                          fontWeight: hasUnread ? FontWeight.w500 : FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    if (hasUnread)
+                      Container(
+                        margin: const EdgeInsets.only(left: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                            unreadCount > 99 ? '99+' : '$unreadCount',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -1412,6 +1915,8 @@ class _TailorChatsPage extends StatelessWidget {
                   );
                 },
               );
+                },
+              );
             },
           );
         },
@@ -1421,9 +1926,20 @@ class _TailorChatsPage extends StatelessWidget {
 
   String _formatDate(DateTime date) {
     final now = DateTime.now();
-    if (date.year == now.year && date.month == now.month && date.day == now.day) {
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+    final dateOnly = DateTime(date.year, date.month, date.day);
+
+    if (dateOnly == today) {
       return '${date.hour}:${date.minute.toString().padLeft(2, '0')}';
+    } else if (dateOnly == yesterday) {
+      return 'Kecha';
+    } else if (now.difference(date).inDays < 7) {
+      const weekdays = ['Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh', 'Ya'];
+      return weekdays[date.weekday - 1];
+    } else {
+      return '${date.day}.${date.month}';
     }
-    return '${date.day}.${date.month}';
   }
 }
+

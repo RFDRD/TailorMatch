@@ -52,7 +52,9 @@ class ChatModel {
   final String tailorName;
   final String? lastMessage;
   final DateTime? lastMessageAt;
-  final int unreadCount;
+  final int clientUnreadCount;
+  final int tailorUnreadCount;
+  final List<String> participants; // Qidiruv uchun [clientId, tailorId]
 
   ChatModel({
     required this.id,
@@ -62,20 +64,40 @@ class ChatModel {
     required this.tailorName,
     this.lastMessage,
     this.lastMessageAt,
-    this.unreadCount = 0,
-  });
+    this.clientUnreadCount = 0,
+    this.tailorUnreadCount = 0,
+    List<String>? participants,
+  }) : participants = participants ?? [clientId, tailorId];
+
+  // O'ziga tegishli unread countni olish uchun helper
+  int getUnreadCount(String userId) {
+    if (userId == clientId) return clientUnreadCount;
+    if (userId == tailorId) return tailorUnreadCount;
+    return 0;
+  }
+  
+  // Backward compatibility uchun (eski kodlarni buzmaslik uchun)
+  int get unreadCount => clientUnreadCount + tailorUnreadCount;
 
   factory ChatModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
+    final clientId = data['clientId'] ?? '';
+    final tailorId = data['tailorId'] ?? '';
+    
+    // Eski unreadCount ni tekshirish
+    final oldUnreadCount = data['unreadCount'] ?? 0;
+    
     return ChatModel(
       id: doc.id,
-      clientId: data['clientId'] ?? '',
-      tailorId: data['tailorId'] ?? '',
+      clientId: clientId,
+      tailorId: tailorId,
       clientName: data['clientName'] ?? '',
       tailorName: data['tailorName'] ?? '',
       lastMessage: data['lastMessage'],
       lastMessageAt: (data['lastMessageAt'] as Timestamp?)?.toDate(),
-      unreadCount: data['unreadCount'] ?? 0,
+      clientUnreadCount: data['clientUnreadCount'] ?? 0,
+      tailorUnreadCount: data['tailorUnreadCount'] ?? 0,
+      participants: List<String>.from(data['participants'] ?? [clientId, tailorId]),
     );
   }
 
@@ -89,7 +111,9 @@ class ChatModel {
       'lastMessageAt': lastMessageAt != null 
           ? Timestamp.fromDate(lastMessageAt!) 
           : FieldValue.serverTimestamp(),
-      'unreadCount': unreadCount,
+      'clientUnreadCount': clientUnreadCount,
+      'tailorUnreadCount': tailorUnreadCount,
+      'participants': participants,
     };
   }
 

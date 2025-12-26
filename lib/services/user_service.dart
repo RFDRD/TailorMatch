@@ -64,7 +64,6 @@ class UserService {
     return _firestore
         .collection('services')
         .where('tailorId', isEqualTo: tailorId)
-        .where('isActive', isEqualTo: true)
         .snapshots()
         .map((snapshot) =>
             snapshot.docs.map((doc) => ServiceModel.fromFirestore(doc)).toList());

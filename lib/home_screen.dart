@@ -16,7 +16,10 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 import 'login_screen.dart';
+import 'services/chat_service.dart';
+import 'screens/chat/chats_list_screen.dart';
 
 /// =====================================================
 /// ASOSIY EKRAN - Navigatsiya bilan
@@ -38,13 +41,43 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Qidiruv matni
   final _searchController = TextEditingController();
 
+  /// Chat servisi
+  final _chatService = ChatService();
+  int _unreadMessageCount = 0;
+  StreamSubscription? _chatSubscription;
+
   /// Sahifalar ro'yxati
   static const List<Widget> _pages = [
-    HomePage(),      // 0 - Asosiy
-    CatalogPage(),   // 1 - Katalog
-    OrderPage(),     // 2 - Buyurtmalar
-    ProfilePage(),   // 3 - Profil
+    HomePage(),        // 0 - Asosiy
+    CatalogPage(),     // 1 - Katalog
+    ChatsListScreen(), // 2 - Xabarlar
+    OrderPage(),       // 3 - Buyurtmalar
+    ProfilePage(),     // 4 - Profil
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // _listenToUnreadMessages(); // StreamBuilder ga o'tildi
+  }
+
+  void _listenToUnreadMessages() {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null) return;
+    
+    _chatSubscription = _chatService.getUserChats(userId).listen((chats) {
+      int totalUnread = 0;
+      for (final chat in chats) {
+        // Foydalanuvchi uchun o'qilmagan xabarlar sonini hisoblash
+        final count = chat.getUnreadCount(userId);
+        print('DEBUG: Home chat: ${chat.id}, myId=$userId, count=$count, clientUnread=${chat.clientUnreadCount}, tailorUnread=${chat.tailorUnreadCount}');
+        totalUnread += count;
+      }
+      if (mounted) {
+        setState(() => _unreadMessageCount = totalUnread);
+      }
+    });
+  }
 
   /// Navigatsiya tugmasi bosilganda
   void _onItemTapped(int index) => setState(() => _selectedIndex = index);
@@ -96,47 +129,77 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _pages[_selectedIndex],
       
       // ===== PASTKI NAVIGATSIYA =====
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
+      bottomNavigationBar: StreamBuilder<List<ChatModel>>(
+        stream: _chatService.getUserChats(FirebaseAuth.instance.currentUser?.uid ?? ''),
+        builder: (context, snapshot) {
+          int unreadCount = 0;
+          if (snapshot.hasData) {
+            final userId = FirebaseAuth.instance.currentUser?.uid;
+            if (userId != null) {
+              for (final chat in snapshot.data!) {
+                unreadCount += chat.getUnreadCount(userId);
+              }
+            }
+          }
+
+          return Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, -2),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: 'Asosiy',
+            child: BottomNavigationBar(
+              items: [
+                const BottomNavigationBarItem(
+                  icon: Icon(Icons.home_outlined),
+                  activeIcon: Icon(Icons.home),
+                  label: 'Asosiy',
+                ),
+                const BottomNavigationBarItem(
+                  icon: Icon(Icons.grid_view_outlined),
+                  activeIcon: Icon(Icons.grid_view),
+                  label: 'Katalog',
+                ),
+                BottomNavigationBarItem(
+                  icon: unreadCount > 0
+                      ? Badge(
+                          label: Text(unreadCount.toString()),
+                          child: const Icon(Icons.chat_outlined),
+                        )
+                      : const Icon(Icons.chat_outlined),
+                  activeIcon: unreadCount > 0
+                      ? Badge(
+                          label: Text(unreadCount.toString()),
+                          child: const Icon(Icons.chat),
+                        )
+                      : const Icon(Icons.chat),
+                  label: 'Xabarlar',
+                ),
+                const BottomNavigationBarItem(
+                  icon: Icon(Icons.shopping_bag_outlined),
+                  activeIcon: Icon(Icons.shopping_bag),
+                  label: 'Buyurtmalar',
+                ),
+                const BottomNavigationBarItem(
+                  icon: Icon(Icons.person_outline),
+                  activeIcon: Icon(Icons.person),
+                  label: 'Profil',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: const Color(0xFFff00ae),
+              unselectedItemColor: Colors.grey,
+              backgroundColor: Colors.white,
+              onTap: _onItemTapped,
+              type: BottomNavigationBarType.fixed,
+              elevation: 0,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view_outlined),
-              activeIcon: Icon(Icons.grid_view),
-              label: 'Katalog',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag_outlined),
-              activeIcon: Icon(Icons.shopping_bag),
-              label: 'Buyurtmalar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
-              label: 'Profil',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: const Color(0xFFff00ae),
-          unselectedItemColor: Colors.grey,
-          backgroundColor: Colors.white,
-          onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-        ),
+          );
+        },
       ),
     );
   }
@@ -144,6 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    _chatSubscription?.cancel();
     super.dispose();
   }
 }
